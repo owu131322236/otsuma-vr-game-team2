@@ -1,0 +1,216 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Color Difference Search</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+    <a-scene cursor="rayOrigin: mouse" background="color: #e0ffff">
+
+        <a-entity camera position="0 2 15" look-controls wasd-controls></a-entity>
+
+        <a-entity id="vr-ui-group" position="0 2 -2.5">
+            <a-box id="vr-start-button-box" 
+                   width="1.8" height="0.6" depth="0.1" 
+                   color="#B22222" 
+                   position="0 0 0"
+                   class="clickable-ui"
+                   event-set__click="_target: #start-game-button; _event: click">
+            </a-box>
+            <a-text value="Game Start!!" 
+                    align="center" 
+                    width="2" 
+                    color="#FFFFFF" 
+                    position="0 0 0.06">
+            </a-text>
+        </a-entity>
+
+
+        <a-box id="right-building" position="7 2.25 -3" scale="3 4.5 2" color="#C0C0C0"></a-box>
+        <a-box class="window" position="6 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="7 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="8 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="6 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="7 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="8 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="6 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="7 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="8 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+
+        <a-box id="left-building" position="-7 3.75 -3" scale="3 7.5 2" color="#C0C0C0"></a-box>
+        <a-box class="window" position="-8 5 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 5 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 5 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 4 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 4 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 4 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+
+        <a-box id="main-building" position="0 1.5 -3" scale="5 3 2" color="#C0C0C0"></a-box>
+        <a-box class="window" position="-1 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="0 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="1 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-1 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="0 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="1 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+
+        <a-box id="rooftop-structure" position="0 3.75 -3" scale="2 1.5 1.5" color="#C0C0C0"></a-box>
+        <a-torus id="clock-face" position="0 3.75 -2.2" radius="0.5" radius-tubular="0.05" color="#B22222" rotation="0 0 0"></a-torus>
+        
+        <a-plane position="0 0 -3" rotation="-90 0 0" width="30" height="30" color="#808000"></a-plane>
+        <a-grid position="0 0.01 -3" width="30" height="30" color="#A9A9A9"></a-grid>
+
+        <a-entity laser-controls="hand: right" raycaster="objects: .window, .clickable-ui; lineColor: red; lineOpacity: 0.8;"></a-entity>
+    </a-scene>
+    <div class="message-box" id="start-message-box" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100;">
+        <p></p>
+        <button class="start-button" id="start-game-button">Game Start!!</button>
+    </div>
+
+    <div class="message-box" id="clear-message-box" style="display: none;">
+        <p>Congratulations!</p>
+    </div>
+
+    <div class="message-box" id="game-over-message-box" style="display: none;">
+        <p>Game Over…</p>
+    </div>
+
+    <div id="timer-display" style="display: none;">Remaining Time: <span id="time-left"></span>s</div>
+
+    <script>
+        let gameStarted = false; // ゲームが開始されたかどうかのフラグ
+        let timeLeft = 0; // 残り時間
+        let timerInterval; // タイマーのインターバルID
+
+        const INITIAL_TIME = 30; // 初期制限時間（秒）
+        const totalTargets = 5; // 見つけるべき窓の数
+
+        $(function() {
+            const windows = $('.window');
+            // VR用のUIと元のHTML UI要素
+            const vrStartButton = $('#vr-ui-group');
+            const htmlStartMessageBox = $('#start-message-box');
+
+            // 初期状態では開始メッセージを表示
+            htmlStartMessageBox.show();
+            $('#clear-message-box').hide();
+            $('#game-over-message-box').hide();
+            $('#timer-display').hide();
+            
+            // ⭐ 3DのVRボタンを初期状態では表示
+            vrStartButton.show();
+
+
+            // スタートボタンがクリックされたらゲームを開始
+            $('#start-game-button').on('click', function() {
+                startGame();
+            });
+
+            // ゲーム開始処理
+            function startGame() {
+                gameStarted = true;
+                htmlStartMessageBox.hide();
+                $('#game-over-message-box').hide();
+                $('#clear-message-box').hide();
+                $('#timer-display').show();
+                
+                // ⭐ ゲーム開始時、3DのVRボタンを非表示
+                vrStartButton.hide();
+
+                // すべての窓を元の色にリセット
+                windows.attr('color', '#4169E1');
+                windows.removeClass('target-window'); // 既存のターゲットクラスを削除
+
+                // ランダムに5つの窓を選ぶ
+                let targetIndices = [];
+                while (targetIndices.length < totalTargets) {
+                    const randIndex = Math.floor(Math.random() * windows.length);
+                    if (!targetIndices.includes(randIndex)) {
+                        targetIndices.push(randIndex);
+                    }
+                }
+
+                // 選ばれた窓に特別なクラスを追加
+                targetIndices.forEach(i => {
+                    windows.eq(i).addClass('target-window');
+                });
+
+                // タイマーをセット
+                timeLeft = INITIAL_TIME;
+                $('#time-left').text(timeLeft);
+                clearInterval(timerInterval); // 既存のタイマーがあればクリア
+                timerInterval = setInterval(function() {
+                    timeLeft--;
+                    $('#time-left').text(timeLeft);
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        endGame(false); // ゲームオーバー
+                    }
+                }, 1000);
+            }
+
+            // 窓をクリックしたときのイベント
+            $('.window').on('click', function(e) {
+                if (!gameStarted) { // ゲームが開始されていない場合は何もしない
+                    return;
+                }
+
+                const $this = $(this);
+                const currentColor = $this.attr('color');
+
+                if ($this.hasClass('target-window')) {
+                    $this.attr('color', '#FF4500'); // 窓を赤色にする
+                    $this.removeClass('target-window'); // クリックされたらターゲットから除外
+                    checkAllWindowsClicked(); // クリックするたびにチェック
+                } else if (currentColor === '#FF4500' || currentColor === '#FFD700') { // 赤色または金色ならば
+                    $this.attr('color', '#4169E1'); // 窓を元の青色に戻す
+                } else {
+                    $this.attr('color', '#FFD700'); // 窓を金色にする
+                }
+            });
+
+            // すべてのtarget-windowがクリックされたかどうかをチェックする関数
+            function checkAllWindowsClicked() {
+                if ($('.target-window').length === 0) {
+                    clearInterval(timerInterval); // タイマーを停止
+                    endGame(true); // ゲームクリア
+                }
+            }
+
+            // ゲーム終了処理 (クリア or ゲームオーバー)
+            function endGame(isCleared) {
+                gameStarted = false;
+                $('#timer-display').hide(); // タイマーを非表示に
+                if (isCleared) {
+                    $('#clear-message-box').show();
+                    setTimeout(function() {
+                        $('#clear-message-box').fadeOut();
+                        htmlStartMessageBox.show(); // スタートメッセージ再表示
+                        vrStartButton.show(); // ⭐ 3DのVRボタンも再表示
+                        windows.attr('color', '#4169E1'); // 窓の色をリセット
+                    }, 3000); // 3秒後にメッセージを非表示にする
+                } else {
+                    $('#game-over-message-box').show(); // ゲームオーバーメッセージ表示
+                    setTimeout(function() {
+                        $('#game-over-message-box').fadeOut();
+                        htmlStartMessageBox.show(); // スタートメッセージ再表示
+                        vrStartButton.show(); // ⭐ 3DのVRボタンも再表示
+                        windows.attr('color', '#4169E1'); // 窓の色をリセット
+                    }, 3000); // 3秒後にメッセージを非表示にする
+                }
+            }
+        });
+    </script>
+</body>
+</html>
