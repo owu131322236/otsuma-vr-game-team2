@@ -28,7 +28,6 @@
             </a-text>
         </a-entity>
 
-
         <a-box id="right-building" position="7 2.25 -3" scale="3 4.5 2" color="#C0C0C0"></a-box>
         <a-box class="window" position="6 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
         <a-box class="window" position="7 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
@@ -69,8 +68,6 @@
         <a-torus id="clock-face" position="0 3.75 -2.2" radius="0.5" radius-tubular="0.05" color="#B22222" rotation="0 0 0"></a-torus>
         
         <a-plane position="0 0 -3" rotation="-90 0 0" width="30" height="30" color="#808000"></a-plane>
-        <a-grid position="0 0.01 -3" width="30" height="30" color="#A9A9A9"></a-grid>
-
         <a-entity laser-controls="hand: right" raycaster="objects: .window, .clickable-ui; lineColor: red; lineOpacity: 0.8;"></a-entity>
     </a-scene>
     <div class="message-box" id="start-message-box" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100;">
@@ -89,16 +86,15 @@
     <div id="timer-display" style="display: none;">Remaining Time: <span id="time-left"></span>s</div>
 
     <script>
-        let gameStarted = false; // ゲームが開始されたかどうかのフラグ
-        let timeLeft = 0; // 残り時間
-        let timerInterval; // タイマーのインターバルID
+        let gameStarted = false; 
+        let timeLeft = 0; 
+        let timerInterval; 
 
-        const INITIAL_TIME = 30; // 初期制限時間（秒）
-        const totalTargets = 5; // 見つけるべき窓の数
+        const INITIAL_TIME = 30; 
+        const totalTargets = 5; 
 
         $(function() {
             const windows = $('.window');
-            // VR用のUIと元のHTML UI要素
             const vrStartButton = $('#vr-ui-group');
             const htmlStartMessageBox = $('#start-message-box');
 
@@ -108,7 +104,7 @@
             $('#game-over-message-box').hide();
             $('#timer-display').hide();
             
-            // ⭐ 3DのVRボタンを初期状態では表示
+            // 3DのVRボタンを初期状態では表示
             vrStartButton.show();
 
 
@@ -125,12 +121,12 @@
                 $('#clear-message-box').hide();
                 $('#timer-display').show();
                 
-                // ⭐ ゲーム開始時、3DのVRボタンを非表示
+                // ゲーム開始時、3DのVRボタンを非表示
                 vrStartButton.hide();
 
                 // すべての窓を元の色にリセット
                 windows.attr('color', '#4169E1');
-                windows.removeClass('target-window'); // 既存のターゲットクラスを削除
+                windows.removeClass('target-window'); 
 
                 // ランダムに5つの窓を選ぶ
                 let targetIndices = [];
@@ -149,7 +145,7 @@
                 // タイマーをセット
                 timeLeft = INITIAL_TIME;
                 $('#time-left').text(timeLeft);
-                clearInterval(timerInterval); // 既存のタイマーがあればクリア
+                clearInterval(timerInterval); 
                 timerInterval = setInterval(function() {
                     timeLeft--;
                     $('#time-left').text(timeLeft);
@@ -162,7 +158,7 @@
 
             // 窓をクリックしたときのイベント
             $('.window').on('click', function(e) {
-                if (!gameStarted) { // ゲームが開始されていない場合は何もしない
+                if (!gameStarted) { 
                     return;
                 }
 
@@ -171,9 +167,9 @@
 
                 if ($this.hasClass('target-window')) {
                     $this.attr('color', '#FF4500'); // 窓を赤色にする
-                    $this.removeClass('target-window'); // クリックされたらターゲットから除外
+                    $this.removeClass('target-window'); 
                     checkAllWindowsClicked(); // クリックするたびにチェック
-                } else if (currentColor === '#FF4500' || currentColor === '#FFD700') { // 赤色または金色ならば
+                } else if (currentColor === '#FF4500' || currentColor === '#FFD700') { 
                     $this.attr('color', '#4169E1'); // 窓を元の青色に戻す
                 } else {
                     $this.attr('color', '#FFD700'); // 窓を金色にする
@@ -183,7 +179,7 @@
             // すべてのtarget-windowがクリックされたかどうかをチェックする関数
             function checkAllWindowsClicked() {
                 if ($('.target-window').length === 0) {
-                    clearInterval(timerInterval); // タイマーを停止
+                    clearInterval(timerInterval); 
                     endGame(true); // ゲームクリア
                 }
             }
@@ -191,23 +187,23 @@
             // ゲーム終了処理 (クリア or ゲームオーバー)
             function endGame(isCleared) {
                 gameStarted = false;
-                $('#timer-display').hide(); // タイマーを非表示に
+                $('#timer-display').hide(); 
                 if (isCleared) {
                     $('#clear-message-box').show();
                     setTimeout(function() {
                         $('#clear-message-box').fadeOut();
-                        htmlStartMessageBox.show(); // スタートメッセージ再表示
-                        vrStartButton.show(); // ⭐ 3DのVRボタンも再表示
-                        windows.attr('color', '#4169E1'); // 窓の色をリセット
-                    }, 3000); // 3秒後にメッセージを非表示にする
+                        htmlStartMessageBox.show(); 
+                        vrStartButton.show(); 
+                        windows.attr('color', '#4169E1'); 
+                    }, 3000); 
                 } else {
-                    $('#game-over-message-box').show(); // ゲームオーバーメッセージ表示
+                    $('#game-over-message-box').show(); 
                     setTimeout(function() {
                         $('#game-over-message-box').fadeOut();
-                        htmlStartMessageBox.show(); // スタートメッセージ再表示
-                        vrStartButton.show(); // ⭐ 3DのVRボタンも再表示
-                        windows.attr('color', '#4169E1'); // 窓の色をリセット
-                    }, 3000); // 3秒後にメッセージを非表示にする
+                        htmlStartMessageBox.show(); 
+                        vrStartButton.show(); 
+                        windows.attr('color', '#4169E1'); 
+                    }, 3000); 
                 }
             }
         });
