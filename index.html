@@ -1,1 +1,105 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
+    <link rel="stylesheet" href="stylesheet.css" />
+  </head>
+  <body>
+    <a-scene background="color: #cfeaff">
+
+      <!-- ====== 外観 ====== -->
+      <!-- 地面 -->
+      <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#5a8f5a"></a-plane>
+      <!-- 壁 -->
+      <a-box position="0 4 0" width="30" height="8" depth="30" color="#ffffff"></a-box>
+      <a-box position="0 4 0" width="29" height="7.5" depth="29" color="#ffffff" opacity="0"></a-box>
+      <!-- 玄関ドア -->
+        <a-box id="doorB" position="-2.1 2 15" depth="0.2" height="4" width="2" color="#663300" class="clickable" rotation="0 180 0">
+            <a-box position="0 0 -0.01" depth="0.01" height="4.2" width="2.2" color="#daa520"></a-box>
+            <a-sphere position="-0.7 0 -0.2" radius="0.1" color="#ffd700"></a-sphere>
+        </a-box>
+        <a-box id="doorB" position="0 2 15" depth="0.2" height="4" width="2" color="#663300" class="clickable" rotation="0 180 0">
+            <a-box position="0 0 -0.01" depth="0.01" height="4.2" width="2.2" color="#daa520"></a-box>
+            <a-sphere position="0.7 0 -0.2" radius="0.1" color="#ffd700"></a-sphere>
+        </a-box>
+        <a-text value="Room B" align="center" position="0 4 14.8" rotation="0 180 0" color="#333" width="6"></a-text>
+      <!-- ====== ロビー ====== -->
+        <!-- 照明 -->
+        <a-entity light="type: ambient; intensity: 0.6; color: #ffffff"></a-entity>
+        <a-entity light="type: spot; intensity: 1.5; angle:45; penumbra:0.3; position="0 8 0" target="#floor"></a-entity>
+        <a-entity id="floor"></a-entity>
+  
+        <!-- 床 -->
+        <a-plane position="0 0.1 0" rotation="-90 0 0" width="30" height="30" color="#e0e0e0" material="roughness:0.1; metalness:0.3;"></a-plane>
+  
+        <!-- 天井 -->
+        <a-plane position="0 8 0" rotation="90 0 0" width="30" height="30" color="#fafafa"></a-plane>
+  
+        <!-- 壁 -->
+        <a-plane position="0 4 -15" rotation="0 0 0" width="30" height="8" color="#ffffff"></a-plane>
+        <a-plane position="0 4 15" rotation="0 180 0" width="30" height="8" color="#ffffff"></a-plane>
+        <a-plane position="15 4 0" rotation="0 -90 0" width="30" height="8" color="#ffffff"></a-plane>
+        <a-plane position="-15 4 0" rotation="0 90 0" width="30" height="8" color="#ffffff"></a-plane>
+  
+        <!-- 柱 -->
+        <a-cylinder position="-10 4 -10" radius="0.5" height="8" color="#dcdcdc"></a-cylinder>
+        <a-cylinder position="10 4 -10" radius="0.5" height="8" color="#dcdcdc"></a-cylinder>
+        <a-cylinder position="-10 4 10" radius="0.5" height="8" color="#dcdcdc"></a-cylinder>
+        <a-cylinder position="10 4 10" radius="0.5" height="8" color="#dcdcdc"></a-cylinder>
+  
+        <!-- カーペット -->
+        <a-plane position="0 0.12 0" rotation="-90 0 0" width="4" height="25" color="#b22222"></a-plane>
+        <!-- ドア（前） -->
+        <a-box id="doorA" position="0 2 -14.9" depth="0.2" height="4" width="2" color="#663300" class="clickable">
+            <a-box position="0 0 0.01" depth="0.01" height="4.2" width="2.2" color="#daa520"></a-box>
+            <a-sphere position="0.7 0 0.2" radius="0.1" color="#ffd700"></a-sphere>
+        </a-box>
+        <a-text value="Room A" align="center" position="0 4 -14.8" color="#333" width="6"></a-text>
+        
+        <!-- ドア（左） -->
+        <a-box id="doorC" position="-14.9 2 0" depth="2" height="4" width="0.2" color="#663300" class="clickable" rotation="0 0 0">
+            <a-box position="0 0 0.01" depth="0.01" height="4.2" width="2.2" rotation="0 -90 0" color="#daa520"></a-box>
+            <a-sphere position="0.2 0 0.7" radius="0.1" color="#ffd700"></a-sphere>
+        </a-box>
+        <a-text value="Room C" align="center" position="-14.8 4 0" rotation="0 90 0" color="#333" width="6"></a-text>
+    
+        <!-- ドア（右） -->
+        <a-box id="doorD" position="14.9 2 0" depth="2" height="4" width="0.2" color="#663300" class="clickable" rotation="0 0 0">
+            <a-box position="0 0 0.01" depth="0.01" height="4.2" width="2.2" rotation="0 90 0" color="#daa520"></a-box>
+            <a-sphere position="0.2 0 -0.7" radius="0.1" color="#ffd700"></a-sphere>
+        </a-box>
+        <a-text value="Room D" align="center" position="14.8 4 0" rotation="0 -90 0" color="#333" width="6"></a-text>
+      
+        <!-- シャンデリア -->
+        <a-sphere position="0 7 0" radius="0.5" color="#ffd700" material="emissive: #ffd700; emissiveIntensity: 0.6;"></a-sphere>
+
+        <!-- カメラなど -->
+        <a-entity id="cameraRig" position="0 1.6 30">
+            <a-entity camera look-controls wasd-controls>
+            <a-entity cursor="rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
+            </a-entity>
+        </a-entity>
+        <a-entity id="rightHand"
+          laser-controls="hand: right"
+          raycaster="objects: .clickable"   
+          line="opacity: 0.9">       
+        </a-entity>
+        <a-entity id="leftHand"
+                laser-controls="hand: left"
+                raycaster="objects: .clickable"
+                line="opacity: 0.9">
+        </a-entity>
+
+    </a-scene>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const doorA = document.querySelector("#doorA");
+          doorA.addEventListener("click", () => {
+            window.location.href = "index2.html"; 
+          });
+        });
+      </script>
+  </body>
+</html>
 
