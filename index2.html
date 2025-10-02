@@ -6,27 +6,45 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
     <link rel="stylesheet" href="stylesheet.css">
+    
+    <style>
+        /* HTMLのメッセージボックスのスタイル */
+        .message-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        #timer-display {
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            color: white; 
+            background: rgba(0, 0, 0, 0.7); 
+            padding: 5px; 
+            border-radius: 5px; 
+            z-index: 100;
+            font-family: sans-serif;
+        }
+    </style>
 </head>
 <body>
-    <a-scene cursor="rayOrigin: mouse" background="color: #e0ffff">
+    <a-scene background="color: #e0ffff">
 
-        <a-entity camera position="0 2 15" look-controls wasd-controls></a-entity>
-
-        <a-entity id="vr-ui-group" position="0 2 -2.5">
-            <a-box id="vr-start-button-box" 
-                   width="1.8" height="0.6" depth="0.1" 
-                   color="#B22222" 
-                   position="0 0 0"
-                   class="clickable-ui"
-                   event-set__click="_target: #start-game-button; _event: click">
-            </a-box>
-            <a-text value="Game Start!!" 
-                    align="center" 
-                    width="2" 
-                    color="#FFFFFF" 
-                    position="0 0 0.06">
-            </a-text>
+        <a-entity camera position="0 2 15" look-controls wasd-controls>
+            <a-entity cursor="fuse: true; rayOrigin: mouse" 
+                      raycaster="objects: .window; far: 50; interval: 1000; lineColor: red; lineOpacity: 0.8;"></a-entity>
         </a-entity>
+        
+        <a-entity laser-controls="hand: right" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
+        <a-entity laser-controls="hand: left" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
 
         <a-box id="right-building" position="7 2.25 -3" scale="3 4.5 2" color="#C0C0C0"></a-box>
         <a-box class="window" position="6 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
@@ -68,13 +86,8 @@
         <a-torus id="clock-face" position="0 3.75 -2.2" radius="0.5" radius-tubular="0.05" color="#B22222" rotation="0 0 0"></a-torus>
         
         <a-plane position="0 0 -3" rotation="-90 0 0" width="30" height="30" color="#808000"></a-plane>
-        <a-entity laser-controls="hand: right" raycaster="objects: .window, .clickable-ui; lineColor: red; lineOpacity: 0.8;"></a-entity>
     </a-scene>
-    <div class="message-box" id="start-message-box" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100;">
-        <p></p>
-        <button class="start-button" id="start-game-button">Game Start!!</button>
-    </div>
-
+    
     <div class="message-box" id="clear-message-box" style="display: none;">
         <p>Congratulations!</p>
     </div>
@@ -86,43 +99,34 @@
     <div id="timer-display" style="display: none;">Remaining Time: <span id="time-left"></span>s</div>
 
     <script>
-        let gameStarted = false; 
-        let timeLeft = 0; 
-        let timerInterval; 
+        // グローバルスコープでアクセスできるように変数と関数を定義
+        let gameStarted = false;
+        let timeLeft = 0;
+        let timerInterval;
 
-        const INITIAL_TIME = 30; 
-        const totalTargets = 5; 
+        const INITIAL_TIME = 30;
+        const totalTargets = 5;
+
+        // start-game-on-click コンポーネントは不要になったため削除
 
         $(function() {
             const windows = $('.window');
-            const vrStartButton = $('#vr-ui-group');
-            const htmlStartMessageBox = $('#start-message-box');
+            // startSphereGroup の取得は不要になったため削除
 
-            // 初期状態では開始メッセージを表示
-            htmlStartMessageBox.show();
+            // 初期状態の設定
             $('#clear-message-box').hide();
             $('#game-over-message-box').hide();
             $('#timer-display').hide();
-            
-            // 3DのVRボタンを初期状態では表示
-            vrStartButton.show();
-
-
-            // スタートボタンがクリックされたらゲームを開始
-            $('#start-game-button').on('click', function() {
-                startGame();
-            });
+            // スタート用立体の表示/非表示制御は不要
 
             // ゲーム開始処理
             function startGame() {
-                gameStarted = true;
-                htmlStartMessageBox.hide();
+                window.gameStarted = true;
                 $('#game-over-message-box').hide();
                 $('#clear-message-box').hide();
                 $('#timer-display').show();
                 
-                // ゲーム開始時、3DのVRボタンを非表示
-                vrStartButton.hide();
+                // スタート用立体の非表示処理は不要
 
                 // すべての窓を元の色にリセット
                 windows.attr('color', '#4169E1');
@@ -158,7 +162,7 @@
 
             // 窓をクリックしたときのイベント
             $('.window').on('click', function(e) {
-                if (!gameStarted) { 
+                if (!window.gameStarted) { 
                     return;
                 }
 
@@ -186,26 +190,37 @@
 
             // ゲーム終了処理 (クリア or ゲームオーバー)
             function endGame(isCleared) {
-                gameStarted = false;
+                window.gameStarted = false;
                 $('#timer-display').hide(); 
                 if (isCleared) {
                     $('#clear-message-box').show();
                     setTimeout(function() {
                         $('#clear-message-box').fadeOut();
-                        htmlStartMessageBox.show(); 
-                        vrStartButton.show(); 
-                        windows.attr('color', '#4169E1'); 
+                        // ゲームを再スタート（リセット）
+                        startGame(); 
                     }, 3000); 
                 } else {
                     $('#game-over-message-box').show(); 
                     setTimeout(function() {
                         $('#game-over-message-box').fadeOut();
-                        htmlStartMessageBox.show(); 
-                        vrStartButton.show(); 
-                        windows.attr('color', '#4169E1'); 
+                        // ゲームを再スタート（リセット）
+                        startGame(); 
                     }, 3000); 
                 }
             }
+            
+            // A-Frameのロード完了を待ってからゲームをスタート
+            // A-Frameの要素（windows）を確実に操作するために、a-sceneの 'loaded' イベントを使用します。
+            $('a-scene').on('loaded', function() {
+                startGame();
+            });
+
+            // 念のため jQuery の DOM Ready でも実行しておく（保険として）
+            // startGame();
+            
+            // 関数をグローバルスコープに設定（今回は外部からのアクセスは不要になりましたが、以前の慣習として残すこともできます）
+            window.startGame = startGame;
+            window.endGame = endGame;
         });
     </script>
 </body>
