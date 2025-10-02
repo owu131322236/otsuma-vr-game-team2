@@ -33,6 +33,47 @@
             z-index: 100;
             font-family: sans-serif;
         }
+        body { margin: 0; overflow: hidden; }
+        .message-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            color: white;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px; /* paddingを調整 */
+            border-radius: 10px;
+            z-index: 1000;
+            display: none;
+            text-align: center;
+            font-size: 2em; /* フォントサイズを調整 */
+        }
+        .start-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 24px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .start-button:hover {
+            background-color: #45a049; /* ホバー時の色 */
+        }
+        #timer-display {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 2em;
+            z-index: 999;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -225,4 +266,5 @@
     </script>
 </body>
 </html>
+
 
