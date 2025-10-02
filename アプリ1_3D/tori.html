@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>画像ターゲットクリックゲーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <style>
+    body { margin:0; }
+  </style>
+</head>
+<body>
+  <a-scene>
+    <!-- 背景画像 -->
+    <a-sky src="sora.jpg"></a-sky>
+
+    <!-- カメラ＋カーソル -->
+    <a-entity id="cameraRig" position="0 1.6 0">
+      <a-entity camera look-controls></a-entity>
+      <a-entity 
+        cursor="rayOrigin: mouse"
+        raycaster="objects: .clickable"
+        position="0 0 -1"
+        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+        material="color: black; shader: flat">
+      </a-entity>
+    </a-entity>
+
+    <!-- スコア＆タイマー -->
+    <a-text id="scoreText" value="Score: 0" position="-1.5 2.8 -3" color="black" width="4"></a-text>
+    <a-text id="timeText" value="Time: 30" position="1 2.8 -3" color="black" width="4"></a-text>
+    <a-text id="resultText" value="" position="-1.5 2.4 -3" color="red" width="6"></a-text>
+
+    <!-- VR空間内スタートボタン -->
+    <a-plane id="start-plane" class="clickable"
+             position="0 1.6 -3"
+             width="1.5" height="0.5"
+             color="#FFC107">
+    </a-plane>
+    <a-text id="start-text" value="Start"
+            position="0 1.6 -2.9" 
+            align="center" 
+            color="#000"
+            width="4">
+    </a-text>
+
+    <!-- ターゲット表示コンテナ -->
+    <a-entity id="target-container"></a-entity>
+    <a-entity laser-controls="hand: right" raycaster="objects: .window; lineColor: red; lineOpacity: 0.8;"></a-entity>
+  </a-scene>
+
+  <script>
+    let score = 0;
+    let timeLeft = 30;
+    let gameRunning = false;
+    let spawnInterval, timerInterval;
+
+    const scoreText = document.getElementById("scoreText");
+    const timeText = document.getElementById("timeText");
+    const resultText = document.getElementById("resultText");
+    const container = document.getElementById("target-container");
+    const startPlane = document.getElementById("start-plane");
+    const startText = document.getElementById("start-text");
+
+    const birds = [
+      { src: "tori.png",     point: 1,  weight: 55, speed: 2 },
+      { src: "karasu.png",   point: -3, weight: 30, speed: 3 },
+      { src: "aoitori.png",  point: 3,  weight: 15, speed: 4 }
+    ];
+
+    function getRandomBird() {
+      const totalWeight = birds.reduce((sum, b) => sum + b.weight, 0);
+      let r = Math.random() * totalWeight;
+      for (const bird of birds) {
+        if (r < bird.weight) return bird;
+        r -= bird.weight;
+      }
+      return birds[0]; // fallback
+    }
+
+    function spawnTarget() {
+      if (!gameRunning) return;
+
+      const bird = getRandomBird();
+      const direction = Math.random() < 0.5 ? "left" : "right";
+      const y = 1 + Math.random() * 2;
+      const z = -3 - Math.random() * 4;
+      const xStart = direction === "left" ? -6 : 6;
+      const xEnd = direction === "left" ? 6 : -6;
+
+      const image = document.createElement("a-image");
+      image.setAttribute("src", bird.src);
+      image.setAttribute("width", "1");
+      image.setAttribute("height", "1");
+      image.setAttribute("position", `${xStart} ${y} ${z}`);
+      image.setAttribute("class", "clickable");
+
+      const duration = 12000 / bird.speed;
+
+      image.setAttribute("animation", {
+        property: "position",
+        to: `${xEnd} ${y} ${z}`,
+        dur: duration,
+        easing: "linear"
+      });
+
+      image.addEventListener("click", () => {
+        if (!gameRunning) return;
+        score += bird.point;
+        scoreText.setAttribute("value", "Score: " + score);
+        container.removeChild(image);
+      });
+
+      container.appendChild(image);
+
+      setTimeout(() => {
+        if (container.contains(image)) {
+          container.removeChild(image);
+        }
+      }, duration);
+    }
+
+    function startGame() {
+      // すでに実行中なら無視（スコアリセット防止）
+      if (gameRunning) return;
+
+      score = 0;
+      timeLeft = 30;
+      gameRunning = true;
+      resultText.setAttribute("value", "");
+      scoreText.setAttribute("value", "Score: 0");
+      timeText.setAttribute("value", "Time: 30");
+
+      // ボタンを非表示にする
+      startPlane.setAttribute("visible", "false");
+      startText.setAttribute("visible", "false");
+
+      // 出現間隔を 1200ms にして数を減らす
+      spawnInterval = setInterval(spawnTarget, 1200);
+
+      // カウントダウン（0で止める）
+      timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          timeText.setAttribute("value", "Time: " + timeLeft);
+        }
+        if (timeLeft <= 0) {
+          endGame();
+        }
+      }, 1000);
+    }
+
+    function endGame() {
+      gameRunning = false;
+      clearInterval(spawnInterval);
+      clearInterval(timerInterval);
+      resultText.setAttribute("value", "Time Up! : Your Score : " + score);
+
+      // ボタンを再表示
+      startPlane.setAttribute("visible", "true");
+      startText.setAttribute("value", "Play Again");
+      startText.setAttribute("visible", "true");
+    }
+
+    startPlane.addEventListener('click', startGame);
+  </script>
+</body>
+</html>
