@@ -33,102 +33,60 @@
             z-index: 100;
             font-family: sans-serif;
         }
-        body { margin: 0; overflow: hidden; }
-        .message-box {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            color: white;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 15px; /* paddingを調整 */
-            border-radius: 10px;
-            z-index: 1000;
-            display: none;
-            text-align: center;
-            font-size: 2em; /* フォントサイズを調整 */
-        }
-        .start-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 24px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-        }
-        .start-button:hover {
-            background-color: #45a049; /* ホバー時の色 */
-        }
-        #timer-display {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: white;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 2em;
-            z-index: 999;
-            display: none;
-        }
     </style>
 </head>
 <body>
     <a-scene background="color: #e0ffff">
 
-        <a-entity camera position="0 2 40" look-controls wasd-controls>
-            <a-entity cursor="fuse: true; rayOrigin: mouse" 
-                      raycaster="objects: .window; far: 50; interval: 1000; lineColor: red; lineOpacity: 0.8;"></a-entity>
+        <a-entity camera position="0 2 15" look-controls wasd-controls>
+        <a-entity cursor="fuse: true; rayOrigin: mouse" 
+                raycaster="objects: .window; far: 50; interval: 1000; lineColor: red; lineOpacity: 0.8;"></a-entity>
         </a-entity>
-        
+
         <a-entity laser-controls="hand: right" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
         <a-entity laser-controls="hand: left" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
 
-        <a-box id="right-building" position="7 2.25 -3" scale="3 4.5 2" color="#C0C0C0"></a-box>
-        <a-box class="window" position="6 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="7 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="8 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="6 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="7 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="8 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="6 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="7 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="8 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box id="right-building" position="7 2.25 -13" scale="3 4.5 2" color="#C0C0C0"></a-box>
+        <a-box class="window" position="6 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="7 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="8 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="6 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="7 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="8 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="6 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="7 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="8 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
 
-        <a-box id="left-building" position="-7 3.75 -3" scale="3 7.5 2" color="#C0C0C0"></a-box>
-        <a-box class="window" position="-8 5 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 5 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 5 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 4 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 4 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 4 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 3 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box id="left-building" position="-7 3.75 -13" scale="3 7.5 2" color="#C0C0C0"></a-box>
+        <a-box class="window" position="-8 5 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 5 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 5 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 4 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 4 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 4 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
 
-        <a-box id="main-building" position="0 1.5 -3" scale="5 3 2" color="#C0C0C0"></a-box>
-        <a-box class="window" position="-1 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="0 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="1 2 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-1 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="0 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="1 1 -1.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box id="main-building" position="0 1.5 -13" scale="5 3 2" color="#C0C0C0"></a-box>
+        <a-box class="window" position="-1 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="0 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="1 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-1 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="0 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="1 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
 
-        <a-box id="rooftop-structure" position="0 3.75 -3" scale="2 1.5 1.5" color="#C0C0C0"></a-box>
-        <a-torus id="clock-face" position="0 3.75 -2.2" radius="0.5" radius-tubular="0.05" color="#B22222" rotation="0 0 0"></a-torus>
-        
-        <a-plane position="0 0 -3" rotation="-90 0 0" width="30" height="30" color="#808000"></a-plane>
-    </a-scene>
-    
+        <a-box id="rooftop-structure" position="0 3.75 -13" scale="2 1.5 1.5" color="#C0C0C0"></a-box>
+        <a-torus id="clock-face" position="0 3.75 -12.2" radius="0.5" radius-tubular="0.05" color="#B22222" rotation="0 0 0"></a-torus>
+ 
+        <a-plane position="0 0 -13" rotation="-90 0 0" width="30" height="30" color="#808000"></a-plane>
+     </a-scene>
     <div class="message-box" id="clear-message-box" style="display: none;">
         <p>Congratulations!</p>
     </div>
@@ -230,28 +188,31 @@
             }
 
             // ゲーム終了処理 (クリア or ゲームオーバー)
-            function endGame(isCleared) {
-                window.gameStarted = false;
-                $('#timer-display').hide(); 
-                if (isCleared) {
-                    $('#clear-message-box').show();
-                    setTimeout(function() {
-                        $('#clear-message-box').fadeOut();
-                        // ゲームを再スタート（リセット）
-                        startGame(); 
-                    }, 3000); 
-                } else {
-                    $('#game-over-message-box').show(); 
-                    setTimeout(function() {
-                        $('#game-over-message-box').fadeOut();
-                        // ゲームを再スタート（リセット）
-                        startGame(); 
-                    }, 3000); 
-                }
-            }
-            
-            // A-Frameのロード完了を待ってからゲームをスタート
-            // A-Frameの要素（windows）を確実に操作するために、a-sceneの 'loaded' イベントを使用します。
+    function endGame(isCleared) {
+        window.gameStarted = false;
+        $('#timer-display').hide(); 
+
+    // フェードアウトの完了後に実行する処理
+        const redirectToIndex = function() {
+        // 現在のページを index.html にリダイレクトする
+            window.location.href = 'index.html';
+        };
+
+        if (isCleared) {
+            $('#clear-message-box').show();
+            setTimeout(function() {
+            // ① フェードアウト完了後、redirectToIndexを実行するように変更
+                $('#clear-message-box').fadeOut(400, redirectToIndex);
+            }, 3000); 
+        } else {
+            $('#game-over-message-box').show(); 
+            setTimeout(function() {
+            // ② フェードアウト完了後、redirectToIndexを実行するように変更
+            $('#game-over-message-box').fadeOut(400, redirectToIndex);
+        }, 3000); 
+    }
+}
+
             $('a-scene').on('loaded', function() {
                 startGame();
             });
@@ -266,6 +227,3 @@
     </script>
 </body>
 </html>
-
-
-
