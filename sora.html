@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://cdn.8thwall.com/web/aframe/ammo.wasm.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+</head>
+<body>
+
+  <a-scene physics="driver: ammo"  cursor="rayOrigin: mouse">
+
+    <a-sky color="#ABE1FA"></a-sky>
+    
+    
+    <a-entity laser-controls="hand: right" raycaster="objects: .clickable-ball; lineColor: red; lineOpacity: 0.8;"></a-entity>
+
+
+    <a-cylinder
+      id="trampoline"
+      position="0 0 -5"
+      radius="1.5"
+      height="0.01"
+      rotation="10 0 0"
+      ammo-body="type: static; emitCollisionEvents: true"
+      ammo-shape="type: cylinder"
+    >
+      <a-sphere radius="1.2" position="0 0 0" color="#ffffff"></a-sphere>
+      <a-sphere radius="1.2" position="1.2 0 0" color="#ffffff"></a-sphere>
+      <a-sphere radius="1.2" position="-1.2 0 0" color="#ffffff"></a-sphere>
+      <a-sphere radius="1.1" position="0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+      <a-sphere radius="1.1" position="-0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+      <a-sphere radius="1.0" position="0 0.6 -0.6" color="#ffffff"></a-sphere>
+      <a-sphere radius="0.6" position="1.5 0.4 0.2" color="#ffffff"></a-sphere>
+      <a-sphere radius="0.6" position="-1.5 0.3 0.2" color="#ffffff"></a-sphere>
+      <a-sphere radius="0.5" position="0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+      <a-sphere radius="0.5" position="-0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+      <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
+      <a-sphere radius="1.5" color="#ffffff" opacity="0.9" transparent="true"></a-sphere>
+    </a-cylinder>
+
+    
+    <a-entity
+      id="goal-basket"
+      position="0 0.5 1"
+      ammo-body="type: static"
+      ammo-shape="type: compound"
+    >
+      <a-cylinder radius="0.5" height="0.05" color="#88CC88"></a-cylinder>
+      <a-torus radius="0.5" radius-tubular="0.03" rotation="90 0 0" position="0 0.25 0" color="#88CC88"></a-torus>
+      <a-cylinder height="0.25" radius="0.02" color="#88CC88" position="0.48 0.125 0"></a-cylinder>
+      <a-cylinder height="0.25" radius="0.02" color="#88CC88" position="-0.48 0.125 0"></a-cylinder>
+      <a-cylinder height="0.25" radius="0.02" color="#88CC88" position="0 0.125 0.48"></a-cylinder>
+      <a-cylinder height="0.25" radius="0.02" color="#88CC88" position="0 0.125 -0.48"></a-cylinder>
+    </a-entity>
+    
+    
+ 
+	<a-entity position="-7 6 -16" scale="2 2 2">
+	    <a-sphere radius="1.2" position="0 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="-1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="-0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.0" position="0 0.6 -0.6" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="1.5 0.4 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="-1.5 0.3 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="-0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
+	</a-entity>
+
+
+	<a-entity position="8 12 -18" scale="1.8 1.8 1.8">
+	    <a-sphere radius="1.2" position="0 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="-1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="-0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.0" position="0 0.6 -0.6" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="1.5 0.4 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="-1.5 0.3 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="-0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
+	</a-entity>
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	<a-entity position="12 3 -16" scale="1.8 1.8 1.8">
+	    <a-sphere radius="1.2" position="0 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="-1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="-0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.0" position="0 0.6 -0.6" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="1.5 0.4 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="-1.5 0.3 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="-0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
+	</a-entity>
+	
+	
+	<a-entity position="-17 -7 -18" scale="1.8 1.8 1.8">
+	    <a-sphere radius="1.2" position="0 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="-1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="-0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.0" position="0 0.6 -0.6" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="1.5 0.4 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="-1.5 0.3 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="-0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
+	</a-entity>
+
+
+	    <a-text id="final-score" value="" position="0 2 -3" align="center" color="#ff69b4" visible="false" width="6"></a-text>
+	    <a-text id="score" value="Score: 0" position="-2 2 -3" color="black"></a-text>
+	    <a-text id="timer" value="Time: 30" position="1.2 2 -3" color="black"></a-text>
+
+	
+	
+	  </a-scene>
+
+  <script>
+    const scene = document.querySelector("a-scene");
+    const trampoline = document.querySelector("#trampoline");
+
+    trampoline.addEventListener("body-loaded", () => {
+      trampoline.body.setRestitution(1.2);
+    });
+
+    trampoline.addEventListener("collide", (e) => {
+      const ball = e.detail.body.el;
+      if (!ball || ball.tagName.toLowerCase() !== "a-sphere") return;
+
+      const range = 0.4; 
+      const offsetX = (Math.random() - 0.5) * range;
+      const targetX = offsetX;
+      const targetZ = 1;
+
+      const pos = ball.getAttribute("position");
+      ball.setAttribute("position", `${targetX} ${pos.y} ${targetZ}`);
+
+      const velocityY = 6;
+      ball.body.setLinearVelocity(new Ammo.btVector3(0, velocityY, 0));
+      ball.body.setAngularVelocity(new Ammo.btVector3(0, 0, 0));
+    });
+
+    let score = 0;
+    let droppedBalls = 0;
+    
+    
+    let clickedBalls = 0; 
+
+    const totalBalls = 10;
+    const scoreDisplay = document.getElementById("score");
+    const finalScoreDisplay = document.getElementById("final-score");
+
+    function checkGameEnd() {
+      if (droppedBalls >= totalBalls) {
+        finalScoreDisplay.setAttribute("value", `Score: ${score}`);
+        finalScoreDisplay.setAttribute("visible", "true");
+      }
+    }
+
+    
+    function getRandomPastelColor() {
+      const hue = Math.floor(Math.random() * 360);
+      return `hsl(${hue}, 70%, 80%)`;
+    }
+	function dropSphere(i) {
+	  let sphere = document.createElement("a-sphere");
+	  sphere.setAttribute("ammo-body", "type: dynamic; emitCollisionEvents: true; ccdMotionThreshold: 1; ccdSweptSphereRadius: 0.2");
+	  sphere.setAttribute("ammo-shape", "type: sphere");
+	  sphere.setAttribute("radius", "0.25");
+
+	  let randomColor = getRandomPastelColor();
+	  sphere.setAttribute("color", randomColor);
+	  sphere.setAttribute("class", "clickable-ball");
+	  sphere.setAttribute("cursor-listener", ""); 
+	  
+	  
+	  
+	  let isGoldBall = (i === Math.floor(Math.random() * totalBalls)) || (i === Math.floor(Math.random() * totalBalls));
+
+  if (isGoldBall) {
+    sphere.setAttribute("color", "gold"); // àF
+    sphere.setAttribute("data-special", "gold");
+  } else {
+    let randomColor = getRandomPastelColor();
+    sphere.setAttribute("color", randomColor);
+  }
+
+	  let randomX = Math.random() * 3 - 1.5;
+	  sphere.setAttribute("position", `${randomX} 5 -5`);
+
+	  sphere.addEventListener("body-loaded", () => {
+	    sphere.body.setRestitution(0.7);
+	    droppedBalls++;
+	    //setTimeout(checkGameEnd, 4000); 
+	  });
+
+	  scene.appendChild(sphere);
+	}
+	AFRAME.registerComponent("cursor-listener", {
+	  init: function () {
+	    this.el.addEventListener("click", () => {
+	     
+	      if (this.el.getAttribute("data-scored")) return;
+
+	      if (this.el.getAttribute("data-special") === "gold") {
+        score += 5; // {[iX_
+      } else {
+        score++;
+      }
+	      
+	      clickedBalls++;
+	      
+	      
+	      scoreDisplay.setAttribute("value", `Score: ${score}`);
+	      this.el.setAttribute("data-scored", "true");
+
+	      
+	      //this.el.setAttribute("color", "#FF69B4"); 
+	      this.el.setAttribute("color", "#00bfff"); 
+	      
+	      
+	      if (clickedBalls === totalBalls && droppedBalls === totalBalls) {
+			  finalScoreDisplay.setAttribute("value", `Score: ${score}`);
+			  finalScoreDisplay.setAttribute("visible", true);
+			}
+			
+			
+			// Vµ¢eLXgGeBeBðì¬
+                const textEntity = document.createElement('a-entity');
+                textEntity.setAttribute('position', '0 0 0.5'); // {[ÌãÉzu
+                textEntity.setAttribute('text', {
+                    value: 'hit!',
+                    align: 'center',
+                    color: 'blue',
+                    width: 5,
+                });
+                textEntity.setAttribute('scale', '0 0 0'); // ÅÍñ\¦
+                this.el.appendChild(textEntity);
+
+                // eLXgðtF[hC³¹éAj[V
+                textEntity.setAttribute('animation', {
+                    property: 'scale',
+                    to: '1 1 1',
+                    dur: 200,
+                    easing: 'easeInQuad'
+                });
+
+                // eLXgðtF[hAEg³¹Äí·é
+                setTimeout(() => {
+                    textEntity.setAttribute('animation', {
+                        property: 'scale',
+                        to: '0 0 0',
+                        dur: 300,
+                        easing: 'easeOutQuad'
+                    });
+                    setTimeout(() => {
+                        this.el.removeChild(textEntity);
+                    }, 300);
+                }, 1000); // 0.5b\¦µÄ©çÁ¦nßé
+                
+	    });
+	  }
+	});
+	
+	let timeLeft = 20; 
+
+	const timerDisplay = document.getElementById("timer");
+
+	const timerInterval = setInterval(() => {
+	  timeLeft--;
+	  timerDisplay.setAttribute("value", `Time: ${timeLeft}`);
+	  
+	  if (timeLeft <= 0) {
+	    clearInterval(timerInterval);
+	    endGame();
+	  }
+	}, 1000);
+	
+	function endGame() {
+	  finalScoreDisplay.setAttribute("value", `Score: ${score}`);
+	  finalScoreDisplay.setAttribute("visible", true);
+	}
+	
+	function checkGameEnd() {
+	  if (clickedBalls === totalBalls && droppedBalls === totalBalls) {
+	    clearInterval(timerInterval);
+	    endGame(); 
+	  }
+	}
+    for (let i = 0; i < 19; i++) {
+      setTimeout(() => dropSphere(i), i * 1000);
+    }
+    
+ 
+    
+    
+  </script>
+</body>
+</html>
