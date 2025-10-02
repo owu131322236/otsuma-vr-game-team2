@@ -46,7 +46,9 @@
 
     <!-- ターゲット表示コンテナ -->
     <a-entity id="target-container"></a-entity>
-    <a-entity laser-controls="hand: right" raycaster="objects: .window; lineColor: red; lineOpacity: 0.8;"></a-entity>
+    <a-entity laser-controls="hand: right"
+          raycaster="objects: .clickable; lineColor: red; lineOpacity: 0.8;">
+	  </a-entity>
   </a-scene>
 
   <script>
@@ -166,3 +168,4 @@
   </script>
 </body>
 </html>
+
