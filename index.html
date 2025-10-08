@@ -6,8 +6,23 @@
     <link rel="stylesheet" href="stylesheet.css" />
   </head>
   <body>
-    <a-scene background="color: #cfeaff">
-
+    <a-scene background="color: #020617">
+      <a-plane position="0 0 0"
+         rotation="-90 0 0"
+         width="100"
+         height="100"
+         material="shader: flat; color: #4caf50;">
+      </a-plane>
+      <a-text value="Welcome to Ichimura seminor" position="0 10 20" rotation="0 0 0" color="#fff" width="30" align="center"></a-text>
+      <a-entity id="moon"
+          geometry="primitive: sphere; radius: 4;"
+          material="color: #FFFFA6; emissive: #fff6aa; emissiveIntensity: 0.9; shader: flat;"
+          position="-50 35 -20">
+      </a-entity>
+      <a-entity light="type: directional; color: #ddeeff; intensity: 0.2"
+                  position="-50 35 -20"
+                  target="#moon">
+      </a-entity>
       <!-- ====== 外観 ====== -->
       <a-box position="0 4.5 0" width="33" height="9" depth="33"
       material="color: #cce6ff; opacity: 0.3; roughness: 0.2; metalness: 0.4;">
@@ -20,13 +35,12 @@
       <a-cylinder position="-16 4 -16" radius="0.2" height="9" color="#888"></a-cylinder>
       <a-box position="0 0.2 16.5" width="18" height="0.4" depth="2.5" color="#dddddd"></a-box>
       <a-box position="0 0.0 17.5" width="20" height="0.4" depth="2.5" color="#cccccc"></a-box>
-      <!-- 外部ライティング -->
-      <a-entity light="type: ambient; intensity: 0.5; color: #ffffff"></a-entity>
-      <a-entity light="type: spot; intensity: 0.8; color: #ffffff; angle: 45; penumbra: 0.3;" position="0 12 0"></a-entity>
-      <a-entity light="type: point; intensity: 0.5; color: #aaddff; distance: 40" position="0 10 15"></a-entity>
-
+      <a-box position="0 9.9 0" width="33.3" height="0.05" depth="33.3"
+         material="emissive: #88ccff; emissiveIntensity: 0.8; shader: flat;">
+      </a-box>
       <!-- 地面 -->
       <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#5a8f5a"></a-plane>
+      <!-- =========内装=========== -->
       <!-- 壁 -->
       <a-box position="0 4 0" width="30" height="8" depth="30" color="#ffffff"></a-box>
       <a-box position="0 4 0" width="29" height="7.5" depth="29" color="#ffffff" opacity="0"></a-box>
@@ -110,10 +124,75 @@
     </a-scene>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+          const scene = document.querySelector("a-scene");
           const doorA = document.querySelector("#doorA");
           doorA.addEventListener("click", () => {
             window.location.href = "index2.html"; 
           });
+          //---------------木---------------------
+          const TREE_COUNT = 25;
+        for (let i = 0; i < TREE_COUNT; i++) {
+          let x, z;
+          // 範囲
+          do {
+            x = (Math.random() - 0.5) * 80;
+            z = (Math.random() - 0.5) * 80;
+          } while (Math.abs(x) < 20 && Math.abs(z) < 20);
+
+          const scale = 0.8 + Math.random() * 1.3;
+
+          // 幹
+          const trunkHeight = 3.5 * scale;
+          const trunk = document.createElement("a-cylinder");
+          trunk.setAttribute("height", trunkHeight);
+          trunk.setAttribute("radius", 0.25 * scale);
+          trunk.setAttribute("color", "#8b5a2b");
+          trunk.setAttribute("material", "shader: flat;");
+          trunk.setAttribute("position", `${x} ${trunkHeight / 2} ${z}`);
+
+          // 葉
+          const crownBaseY = trunkHeight;
+          const leafColors = ["#6bc46b", "#74d474", "#5fcf5f"];
+
+          for (let j = 0; j < 3; j++) {
+            const leaf = document.createElement("a-sphere");
+            const offsetX = (Math.random() - 0.5) * 1.0 * scale;
+            const offsetZ = (Math.random() - 0.5) * 1.0 * scale;
+            const offsetY = 0.8 + Math.random() * 0.6; 
+            leaf.setAttribute("position", `${x + offsetX} ${crownBaseY + offsetY} ${z + offsetZ}`);
+            leaf.setAttribute("radius", 1.2 * scale);
+            leaf.setAttribute("color", leafColors[j]);
+            leaf.setAttribute("material", "shader: flat;");
+            scene.appendChild(leaf);
+          }
+
+          scene.appendChild(trunk);
+        }
+         //-------光のホワホワ-----------------------
+          const PARTICLE_COUNT = 40;
+
+          for (let i = 0; i < PARTICLE_COUNT; i++) {
+            let x, z;
+            do {
+              x = (Math.random() - 0.5) * 80;
+              z = (Math.random() - 0.5) * 80;
+            } while (Math.abs(x) < 20 && Math.abs(z) < 20);
+            const y = Math.random() * 5 + 1;
+            const particle = document.createElement("a-sphere");
+            particle.setAttribute("position", `${x} ${y} ${z}`);
+            particle.setAttribute("radius", "0.05");
+            particle.setAttribute("color", "#ffeeaa");
+            particle.setAttribute("material", "emissive: #ffeeaa; emissiveIntensity: 0.8; shader: flat;");
+            particle.setAttribute("animation", `
+              property: position;
+              dir: alternate;
+              dur: ${3000 + Math.random()*2000};
+              easing: easeInOutSine;
+              loop: true;
+              to: ${x} ${y + 1.5} ${z};
+            `);
+            scene.appendChild(particle);
+          }
         });
       </script>
   </body>
