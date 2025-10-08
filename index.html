@@ -9,6 +9,22 @@
     <a-scene background="color: #cfeaff">
 
       <!-- ====== 外観 ====== -->
+      <a-box position="0 4.5 0" width="33" height="9" depth="33"
+      material="color: #cce6ff; opacity: 0.3; roughness: 0.2; metalness: 0.4;">
+      </a-box>
+      <a-box position="0 9.5 0" width="33.5" height="0.2" depth="33.5" color="#aaaaaa"></a-box>
+      <a-box position="0 0 0" width="33.5" height="0.2" depth="33.5" color="#999999"></a-box>
+      <a-cylinder position="16 4 16" radius="0.2" height="9" color="#888"></a-cylinder>
+      <a-cylinder position="-16 4 16" radius="0.2" height="9" color="#888"></a-cylinder>
+      <a-cylinder position="16 4 -16" radius="0.2" height="9" color="#888"></a-cylinder>
+      <a-cylinder position="-16 4 -16" radius="0.2" height="9" color="#888"></a-cylinder>
+      <a-box position="0 0.2 16.5" width="18" height="0.4" depth="2.5" color="#dddddd"></a-box>
+      <a-box position="0 0.0 17.5" width="20" height="0.4" depth="2.5" color="#cccccc"></a-box>
+      <!-- 外部ライティング -->
+      <a-entity light="type: ambient; intensity: 0.5; color: #ffffff"></a-entity>
+      <a-entity light="type: spot; intensity: 0.8; color: #ffffff; angle: 45; penumbra: 0.3;" position="0 12 0"></a-entity>
+      <a-entity light="type: point; intensity: 0.5; color: #aaddff; distance: 40" position="0 10 15"></a-entity>
+
       <!-- 地面 -->
       <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#5a8f5a"></a-plane>
       <!-- 壁 -->
