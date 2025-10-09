@@ -14,9 +14,12 @@
     <!-- 背景画像 -->
     <a-sky src="image_3D/sora.jpg"></a-sky>
 
-    <!-- カメラ＋カーソル -->
+    <!-- カメラ＋カーソル＋コントローラー -->
     <a-entity id="cameraRig" position="0 1.6 0">
+      <!-- カメラ -->
       <a-entity camera look-controls></a-entity>
+
+      <!-- マウスカーソル（PC操作用） -->
       <a-entity 
         cursor="rayOrigin: mouse"
         raycaster="objects: .clickable"
@@ -24,9 +27,15 @@
         geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
         material="color: black; shader: flat">
       </a-entity>
+
+      <!-- VR右手コントローラー -->
+      <a-entity 
+        laser-controls="hand: right"
+        raycaster="objects: .clickable; lineColor: red; lineOpacity: 0.8;">
+      </a-entity>
     </a-entity>
 
-    <!-- スコア＆タイマー -->
+    <!-- スコア＆タイマー表示 -->
     <a-text id="scoreText" value="Score: 0" position="-1.5 2.8 -3" color="black" width="4"></a-text>
     <a-text id="timeText" value="Time: 30" position="1 2.8 -3" color="black" width="4"></a-text>
     <a-text id="resultText" value="" position="-1.5 2.4 -3" color="red" width="6"></a-text>
@@ -46,9 +55,6 @@
 
     <!-- ターゲット表示コンテナ -->
     <a-entity id="target-container"></a-entity>
-    <a-entity laser-controls="hand: right"
-          raycaster="objects: .clickable; lineColor: red; lineOpacity: 0.8;">
-	</a-entity>
 
   </a-scene>
 
@@ -78,7 +84,7 @@
         if (r < bird.weight) return bird;
         r -= bird.weight;
       }
-      return birds[0]; // fallback
+      return birds[0];
     }
 
     function spawnTarget() {
@@ -124,7 +130,6 @@
     }
 
     function startGame() {
-      // すでに実行中なら無視（スコアリセット防止）
       if (gameRunning) return;
 
       score = 0;
@@ -134,14 +139,12 @@
       scoreText.setAttribute("value", "Score: 0");
       timeText.setAttribute("value", "Time: 30");
 
-      // ボタンを非表示にする
+      // ボタンを非表示
       startPlane.setAttribute("visible", "false");
       startText.setAttribute("visible", "false");
 
-      // 出現間隔を 1200ms にして数を減らす
       spawnInterval = setInterval(spawnTarget, 1200);
 
-      // カウントダウン（0で止める）
       timerInterval = setInterval(() => {
         if (timeLeft > 0) {
           timeLeft--;
@@ -169,4 +172,3 @@
   </script>
 </body>
 </html>
-
