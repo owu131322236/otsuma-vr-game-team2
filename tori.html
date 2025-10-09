@@ -53,6 +53,21 @@
             width="4">
     </a-text>
 
+    <!-- ロビーに戻るボタン（初期は非表示） -->
+    <a-plane id="lobby-plane" class="clickable"
+             position="0 0.9 -3"
+             width="1.8" height="0.5"
+             color="#4CAF50"
+             visible="false">
+    </a-plane>
+    <a-text id="lobby-text" value="Return to Lobby"
+            position="0 0.9 -2.9"
+            align="center"
+            color="#fff"
+            width="5"
+            visible="false">
+    </a-text>
+
     <!-- ターゲット表示コンテナ -->
     <a-entity id="target-container"></a-entity>
 
@@ -70,6 +85,8 @@
     const container = document.getElementById("target-container");
     const startPlane = document.getElementById("start-plane");
     const startText = document.getElementById("start-text");
+    const lobbyPlane = document.getElementById("lobby-plane");
+    const lobbyText = document.getElementById("lobby-text");
 
     const birds = [
       { src: "image_3D/tori.png",     point: 1,  weight: 55, speed: 2 },
@@ -142,6 +159,8 @@
       // ボタンを非表示
       startPlane.setAttribute("visible", "false");
       startText.setAttribute("visible", "false");
+      lobbyPlane.setAttribute("visible", "false");
+      lobbyText.setAttribute("visible", "false");
 
       spawnInterval = setInterval(spawnTarget, 1200);
 
@@ -166,9 +185,19 @@
       startPlane.setAttribute("visible", "true");
       startText.setAttribute("value", "Play Again");
       startText.setAttribute("visible", "true");
+
+      // ロビーボタンも表示
+      lobbyPlane.setAttribute("visible", "true");
+      lobbyText.setAttribute("visible", "true");
     }
 
+    // スタートボタン
     startPlane.addEventListener('click', startGame);
+
+    // ロビーに戻る
+    lobbyPlane.addEventListener('click', () => {
+      window.location.href = "index.html";
+    });
   </script>
 </body>
 </html>
