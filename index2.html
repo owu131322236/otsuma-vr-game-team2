@@ -1,229 +1,228 @@
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>Color Difference Search</title>
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
-    <!-- <link rel="stylesheet" href="stylesheet.css"> -->
-    
-    <style>
-        /* HTMLのメッセージボックスのスタイル */
-        .message-box {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 100;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 1.5em;
-        }
-        #timer-display {
-            position: absolute; 
-            top: 10px; 
-            right: 10px; 
-            color: white; 
-            background: rgba(0, 0, 0, 0.7); 
-            padding: 5px; 
-            border-radius: 5px; 
-            z-index: 100;
-            font-family: sans-serif;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>Color Difference Search</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
+        
+    <style>
+        /* HTMLのメッセージボックスのスタイル */
+        .message-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        #timer-display {
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            color: white; 
+            background: rgba(0, 0, 0, 0.7); 
+            padding: 5px; 
+            border-radius: 5px; 
+            z-index: 100;
+            font-family: sans-serif;
+        }
+    </style>
 </head>
 <body>
-    <a-scene background="color: #e0ffff">
+    <a-scene background="color: #e0ffff">
 
-        <a-entity camera position="0 2 15" look-controls wasd-controls>
-        <a-entity cursor="fuse: true; rayOrigin: mouse" 
-                raycaster="objects: .window; far: 50; interval: 1000; lineColor: red; lineOpacity: 0.8;"></a-entity>
-        </a-entity>
+        <a-entity camera position="0 2 -15" look-controls wasd-controls>
+        <a-entity cursor="fuse: true; rayOrigin: mouse" 
+                raycaster="objects: .window; far: 50; interval: 1000; lineColor: red; lineOpacity: 0.8;"></a-entity>
+        </a-entity>
 
-        <a-entity laser-controls="hand: right" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
-        <a-entity laser-controls="hand: left" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
+        <a-entity laser-controls="hand: right" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
+        <a-entity laser-controls="hand: left" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
 
-        <a-box id="right-building" position="7 2.25 -13" scale="3 4.5 2" color="#C0C0C0"></a-box>
-        <a-box class="window" position="6 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="7 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="8 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="6 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="7 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="8 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="6 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="7 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="8 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box id="right-building" position="7 2.25 -30" scale="3 4.5 2" color="#C0C0C0"></a-box>
+        <a-box class="window" position="6 3 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="7 3 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="8 3 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="6 2 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="7 2 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="8 2 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="6 1 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="7 1 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="8 1 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
 
-        <a-box id="left-building" position="-7 3.75 -13" scale="3 7.5 2" color="#C0C0C0"></a-box>
-        <a-box class="window" position="-8 5 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 5 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 5 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 4 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 4 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 4 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 3 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box id="left-building" position="-7 3.75 -30" scale="3 7.5 2" color="#C0C0C0"></a-box>
+        <a-box class="window" position="-8 5 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 5 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 5 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 4 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 4 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 4 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 3 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 3 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 3 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 2 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 2 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 2 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-8 1 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-7 1 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-6 1 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
 
-        <a-box id="main-building" position="0 1.5 -13" scale="5 3 2" color="#C0C0C0"></a-box>
-        <a-box class="window" position="-1 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="0 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="1 2 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-1 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="0 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="1 1 -11.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box id="main-building" position="0 1.5 -30" scale="5 3 2" color="#C0C0C0"></a-box>
+        <a-box class="window" position="-1 2 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="0 2 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="1 2 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="-1 1 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="0 1 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+        <a-box class="window" position="1 1 -28.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
 
-        <a-box id="rooftop-structure" position="0 3.75 -13" scale="2 1.5 1.5" color="#C0C0C0"></a-box>
-        <a-torus id="clock-face" position="0 3.75 -12.2" radius="0.5" radius-tubular="0.05" color="#B22222" rotation="0 0 0"></a-torus>
- 
-        <a-plane position="0 0 -13" rotation="-90 0 0" width="30" height="30" color="#808000"></a-plane>
-     </a-scene>
-    <div class="message-box" id="clear-message-box" style="display: none;">
-        <p>Congratulations!</p>
-    </div>
+        <a-box id="rooftop-structure" position="0 3.75 -30" scale="2 1.5 1.5" color="#C0C0C0"></a-box>
+        <a-torus id="clock-face" position="0 3.75 -29.2" radius="0.5" radius-tubular="0.05" color="#B22222" rotation="0 0 0"></a-torus>
+ 
+        <a-plane position="0 0 -30" rotation="-90 0 0" width="30" height="30" color="#808000"></a-plane>
+     </a-scene>
+    <div class="message-box" id="clear-message-box" style="display: none;">
+        <p>Congratulations!</p>
+    </div>
 
-    <div class="message-box" id="game-over-message-box" style="display: none;">
-        <p>Game Over…</p>
-    </div>
+    <div class="message-box" id="game-over-message-box" style="display: none;">
+        <p>Game Over…</p>
+    </div>
 
-    <div id="timer-display" style="display: none;">Remaining Time: <span id="time-left"></span>s</div>
+    <div id="timer-display" style="display: none;">Remaining Time: <span id="time-left"></span>s</div>
 
-    <script>
-        // グローバルスコープでアクセスできるように変数と関数を定義
-        let gameStarted = false;
-        let timeLeft = 0;
-        let timerInterval;
+    <script>
+        // グローバルスコープでアクセスできるように変数と関数を定義
+        let gameStarted = false;
+        let timeLeft = 0;
+        let timerInterval;
 
-        const INITIAL_TIME = 30;
-        const totalTargets = 5;
+        const INITIAL_TIME = 30;
+        const totalTargets = 5;
 
-        // start-game-on-click コンポーネントは不要になったため削除
+        // start-game-on-click コンポーネントは不要になったため削除
 
-        $(function() {
-            const windows = $('.window');
-            // startSphereGroup の取得は不要になったため削除
+        $(function() {
+            const windows = $('.window');
+            // startSphereGroup の取得は不要になったため削除
 
-            // 初期状態の設定
-            $('#clear-message-box').hide();
-            $('#game-over-message-box').hide();
-            $('#timer-display').hide();
-            // スタート用立体の表示/非表示制御は不要
+            // 初期状態の設定
+            $('#clear-message-box').hide();
+            $('#game-over-message-box').hide();
+            $('#timer-display').hide();
+            // スタート用立体の表示/非表示制御は不要
 
-            // ゲーム開始処理
-            function startGame() {
-                window.gameStarted = true;
-                $('#game-over-message-box').hide();
-                $('#clear-message-box').hide();
-                $('#timer-display').show();
-                
-                // スタート用立体の非表示処理は不要
+            // ゲーム開始処理
+            function startGame() {
+                window.gameStarted = true;
+                $('#game-over-message-box').hide();
+                $('#clear-message-box').hide();
+                $('#timer-display').show();
+                
+                // スタート用立体の非表示処理は不要
 
-                // すべての窓を元の色にリセット
-                windows.attr('color', '#4169E1');
-                windows.removeClass('target-window'); 
+                // すべての窓を元の色にリセット
+                windows.attr('color', '#4169E1');
+                windows.removeClass('target-window'); 
 
-                // ランダムに5つの窓を選ぶ
-                let targetIndices = [];
-                while (targetIndices.length < totalTargets) {
-                    const randIndex = Math.floor(Math.random() * windows.length);
-                    if (!targetIndices.includes(randIndex)) {
-                        targetIndices.push(randIndex);
-                    }
-                }
+                // ランダムに5つの窓を選ぶ
+                let targetIndices = [];
+                while (targetIndices.length < totalTargets) {
+                    const randIndex = Math.floor(Math.random() * windows.length);
+                    if (!targetIndices.includes(randIndex)) {
+                        targetIndices.push(randIndex);
+                    }
+                }
 
-                // 選ばれた窓に特別なクラスを追加
-                targetIndices.forEach(i => {
-                    windows.eq(i).addClass('target-window');
-                });
+                // 選ばれた窓に特別なクラスを追加
+                targetIndices.forEach(i => {
+                    windows.eq(i).addClass('target-window');
+                });
 
-                // タイマーをセット
-                timeLeft = INITIAL_TIME;
-                $('#time-left').text(timeLeft);
-                clearInterval(timerInterval); 
-                timerInterval = setInterval(function() {
-                    timeLeft--;
-                    $('#time-left').text(timeLeft);
-                    if (timeLeft <= 0) {
-                        clearInterval(timerInterval);
-                        endGame(false); // ゲームオーバー
-                    }
-                }, 1000);
-            }
+                // タイマーをセット
+                timeLeft = INITIAL_TIME;
+                $('#time-left').text(timeLeft);
+                clearInterval(timerInterval); 
+                timerInterval = setInterval(function() {
+                    timeLeft--;
+                    $('#time-left').text(timeLeft);
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        endGame(false); // ゲームオーバー
+                    }
+                }, 1000);
+            }
 
-            // 窓をクリックしたときのイベント
-            $('.window').on('click', function(e) {
-                if (!window.gameStarted) { 
-                    return;
-                }
+            // 窓をクリックしたときのイベント
+            $('.window').on('click', function(e) {
+                if (!window.gameStarted) { 
+                    return;
+                }
 
-                const $this = $(this);
-                const currentColor = $this.attr('color');
+                const $this = $(this);
+                const currentColor = $this.attr('color');
 
-                if ($this.hasClass('target-window')) {
-                    $this.attr('color', '#FF4500'); // 窓を赤色にする
-                    $this.removeClass('target-window'); 
-                    checkAllWindowsClicked(); // クリックするたびにチェック
-                } else if (currentColor === '#FF4500' || currentColor === '#FFD700') { 
-                    $this.attr('color', '#4169E1'); // 窓を元の青色に戻す
-                } else {
-                    $this.attr('color', '#FFD700'); // 窓を金色にする
-                }
-            });
+                if ($this.hasClass('target-window')) {
+                    $this.attr('color', '#FF4500'); // 窓を赤色にする
+                    $this.removeClass('target-window'); 
+                    checkAllWindowsClicked(); // クリックするたびにチェック
+                } else if (currentColor === '#FF4500' || currentColor === '#FFD700') { 
+                    $this.attr('color', '#4169E1'); // 窓を元の青色に戻す
+                } else {
+                    $this.attr('color', '#FFD700'); // 窓を金色にする
+                }
+            });
 
-            // すべてのtarget-windowがクリックされたかどうかをチェックする関数
-            function checkAllWindowsClicked() {
-                if ($('.target-window').length === 0) {
-                    clearInterval(timerInterval); 
-                    endGame(true); // ゲームクリア
-                }
-            }
+            // すべてのtarget-windowがクリックされたかどうかをチェックする関数
+            function checkAllWindowsClicked() {
+                if ($('.target-window').length === 0) {
+                    clearInterval(timerInterval); 
+                    endGame(true); // ゲームクリア
+                }
+            }
 
-            // ゲーム終了処理 (クリア or ゲームオーバー)
-    function endGame(isCleared) {
-        window.gameStarted = false;
-        $('#timer-display').hide(); 
+            // ゲーム終了処理 (クリア or ゲームオーバー)
+    function endGame(isCleared) {
+        window.gameStarted = false;
+        $('#timer-display').hide(); 
 
-    // フェードアウトの完了後に実行する処理
-        const redirectToIndex = function() {
-        // 現在のページを index.html にリダイレクトする
-            window.location.href = 'index.html';
-        };
+    // フェードアウトの完了後に実行する処理
+        const redirectToIndex = function() {
+        // 現在のページを index.html にリダイレクトする
+            window.location.href = 'index.html';
+        };
 
-        if (isCleared) {
-            $('#clear-message-box').show();
-            setTimeout(function() {
-            // ① フェードアウト完了後、redirectToIndexを実行するように変更
-                $('#clear-message-box').fadeOut(400, redirectToIndex);
-            }, 3000); 
-        } else {
-            $('#game-over-message-box').show(); 
-            setTimeout(function() {
-            // ② フェードアウト完了後、redirectToIndexを実行するように変更
-            $('#game-over-message-box').fadeOut(400, redirectToIndex);
-        }, 3000); 
-    }
+        if (isCleared) {
+            $('#clear-message-box').show();
+            setTimeout(function() {
+            // ① フェードアウト完了後、redirectToIndexを実行するように変更
+                $('#clear-message-box').fadeOut(400, redirectToIndex);
+            }, 3000); 
+        } else {
+            $('#game-over-message-box').show(); 
+            setTimeout(function() {
+            // ② フェードアウト完了後、redirectToIndexを実行するように変更
+            $('#game-over-message-box').fadeOut(400, redirectToIndex);
+        }, 3000); 
+    }
 }
 
-            $('a-scene').on('loaded', function() {
-                startGame();
-            });
+            $('a-scene').on('loaded', function() {
+                startGame();
+            });
 
-            // 念のため jQuery の DOM Ready でも実行しておく（保険として）
-            // startGame();
-            
-            // 関数をグローバルスコープに設定（今回は外部からのアクセスは不要になりましたが、以前の慣習として残すこともできます）
-            window.startGame = startGame;
-            window.endGame = endGame;
-        });
-    </script>
+            // 念のため jQuery の DOM Ready でも実行しておく（保険として）
+            // startGame();
+            
+            // 関数をグローバルスコープに設定（今回は外部からのアクセスは不要になりましたが、以前の慣習として残すこともできます）
+            window.startGame = startGame;
+            window.endGame = endGame;
+        });
+    </script>
 </body>
 </html>
