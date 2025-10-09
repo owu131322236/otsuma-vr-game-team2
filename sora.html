@@ -8,12 +8,12 @@
 </head>
 <body>
 
-  <a-scene physics="driver: ammo"  cursor="rayOrigin: mouse">
+  <a-scene physics="driver: ammo; gravity: -2"  cursor="rayOrigin: mouse">
 
     <a-sky color="#ABE1FA"></a-sky>
     
     
-    <a-entity laser-controls="hand: right" raycaster="objects: .clickable-ball; lineColor: red; lineOpacity: 0.8;"></a-entity>
+    <a-entity laser-controls="hand: right" raycaster="objects: .clickable-ball, .clickable; lineColor: red; lineOpacity: 0.8;"></a-entity>
 
 
     <a-cylinder
@@ -129,6 +129,31 @@
 	    <a-text id="timer" value="Time: 30" position="1.2 2 -3" color="black"></a-text>
 
 	
+
+    <!-- 終了ボタン -->
+    <a-sphere 
+        id="end-button" 
+        class="clickable" 
+        position="0 1.2 -2" 
+        radius="0.4"
+        color="#ffc0cb"
+        material="shader: standard; roughness: 1; metalness: 0; opacity: 0.9; transparent: true; envMapIntensity: 0.3;"
+        animation__hover="property: scale; startEvents: mouseenter; to: 1.2 1.2 1.2; dur: 300;"
+        animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 300;"
+        animation__click="property: scale; startEvents: click; to: 0.8 0.8 0.8; dur: 150; dir: alternate;"
+        visible="false">
+        </a-sphere>
+
+    <!-- ボタン上の文字 -->
+    <a-text 
+        id="end-text"
+        value="Home" 
+        position="0 1.2 -1.6" 
+        align="center" 
+        color="#555" 
+        visible="false"
+        font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt"
+        ></a-text>
 	
 	  </a-scene>
 
@@ -137,7 +162,7 @@
     const trampoline = document.querySelector("#trampoline");
 
     trampoline.addEventListener("body-loaded", () => {
-      trampoline.body.setRestitution(1.2);
+      trampoline.body.setRestitution(1.3);
     });
 
     trampoline.addEventListener("collide", (e) => {
@@ -152,7 +177,7 @@
       const pos = ball.getAttribute("position");
       ball.setAttribute("position", `${targetX} ${pos.y} ${targetZ}`);
 
-      const velocityY = 6;
+      const velocityY = 1.5;
       ball.body.setLinearVelocity(new Ammo.btVector3(0, velocityY, 0));
       ball.body.setAngularVelocity(new Ammo.btVector3(0, 0, 0));
     });
@@ -195,7 +220,7 @@
 	  let isGoldBall = (i === Math.floor(Math.random() * totalBalls)) || (i === Math.floor(Math.random() * totalBalls));
 
   if (isGoldBall) {
-    sphere.setAttribute("color", "gold"); // àF
+    sphere.setAttribute("color", "gold"); 
     sphere.setAttribute("data-special", "gold");
   } else {
     let randomColor = getRandomPastelColor();
@@ -220,7 +245,7 @@
 	      if (this.el.getAttribute("data-scored")) return;
 
 	      if (this.el.getAttribute("data-special") === "gold") {
-        score += 5; // {[iX_
+        score += 5; 
       } else {
         score++;
       }
@@ -242,19 +267,19 @@
 			}
 			
 			
-			// Vµ¢eLXgGeBeBðì¬
+		
                 const textEntity = document.createElement('a-entity');
-                textEntity.setAttribute('position', '0 0 0.5'); // {[ÌãÉzu
+                textEntity.setAttribute('position', '0 0 0.5'); 
                 textEntity.setAttribute('text', {
                     value: 'hit!',
                     align: 'center',
                     color: 'blue',
                     width: 5,
                 });
-                textEntity.setAttribute('scale', '0 0 0'); // ÅÍñ\¦
+                textEntity.setAttribute('scale', '0 0 0'); 
                 this.el.appendChild(textEntity);
 
-                // eLXgðtF[hC³¹éAj[V
+        
                 textEntity.setAttribute('animation', {
                     property: 'scale',
                     to: '1 1 1',
@@ -262,7 +287,7 @@
                     easing: 'easeInQuad'
                 });
 
-                // eLXgðtF[hAEg³¹Äí·é
+                
                 setTimeout(() => {
                     textEntity.setAttribute('animation', {
                         property: 'scale',
@@ -273,7 +298,7 @@
                     setTimeout(() => {
                         this.el.removeChild(textEntity);
                     }, 300);
-                }, 1000); // 0.5b\¦µÄ©çÁ¦nßé
+                }, 1000); 
                 
 	    });
 	  }
@@ -293,10 +318,20 @@
 	  }
 	}, 1000);
 	
-	function endGame() {
-	  finalScoreDisplay.setAttribute("value", `Score: ${score}`);
-	  finalScoreDisplay.setAttribute("visible", true);
-	}
+	// function endGame() {
+	//   finalScoreDisplay.setAttribute("value", `Score: ${score}`);
+	//   finalScoreDisplay.setAttribute("visible", true);
+	// }
+    function endGame() {
+    finalScoreDisplay.setAttribute("value", `Score: ${score}`);
+    finalScoreDisplay.setAttribute("visible", true);
+
+    // Dobiiに戻るボタンを表示
+    endButton.setAttribute("visible", true);
+    endText.setAttribute("visible", true);
+    }
+
+
 	
 	function checkGameEnd() {
 	  if (clickedBalls === totalBalls && droppedBalls === totalBalls) {
@@ -308,7 +343,14 @@
       setTimeout(() => dropSphere(i), i * 1000);
     }
     
- 
+        // ゲーム終了ボタンを取得
+    const endButton = document.getElementById("end-button");
+    const endText = document.getElementById("end-text");
+
+    // クリックでindex.htmlへ遷移
+    endButton.addEventListener("click", () => {
+    window.location.href = "index.htm";
+    });
     
     
   </script>
