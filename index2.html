@@ -38,53 +38,53 @@
 </head>
 <body>
     <a-scene background="color: #e0ffff">
-        <a-entity camera position="0 2 0" look-controls wasd-controls>
-        <a-entity cursor="fuse: true; rayOrigin: mouse" raycaster="objects: .window; far: 50; interval: 1000; lineColor: red; lineOpacity: 0.8;"></a-entity>
-        </a-entity>
+        <a-entity camera position="0 2 0" look-controls wasd-controls>
+        <a-entity cursor="fuse: true; rayOrigin: mouse" raycaster="objects: .window; far: 50; interval: 1000; lineColor: red; lineOpacity: 0.8;"></a-entity>
+        </a-entity>
 
-        <a-entity laser-controls="hand: right" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
-        <a-entity laser-controls="hand: left" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
-        
-        <a-box id="right-building" position="7 2.25 -15" scale="3 4.5 2" color="#C0C0C0"></a-box>
-        <a-box class="window" position="6 3 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="7 3 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="8 3 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="6 2 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="7 2 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="8 2 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="6 1 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="7 1 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="8 1 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        
-        <a-box id="left-building" position="-7 3.75 -15" scale="3 7.5 2" color="#C0C0C0"></a-box>
-        <a-box class="window" position="-8 5 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 5 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 5 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 4 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 4 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 4 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 3 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 3 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 3 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 2 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 2 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 2 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-8 1 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-7 1 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-6 1 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        
-        <a-box id="main-building" position="0 1.5 -15" scale="5 3 2" color="#C0C0C0"></a-box>
-        <a-box class="window" position="-1 2 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="0 2 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="1 2 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="-1 1 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="0 1 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        <a-box class="window" position="1 1 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
-        
-        <a-box id="rooftop-structure" position="0 3.75 -15" scale="2 1.5 1.5" color="#C0C0C0"></a-box>
-        <a-torus id="clock-face" position="0 3.75 -14.2" radius="0.5" radius-tubular="0.05" color="#B22222" rotation="0 0 0"></a-torus>
-        <a-plane position="0 0 -15" rotation="-90 0 0" width="30" height="30" color="#808000"></a-plane>
-    </a-scene>
+     <a-entity laser-controls="hand: right" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
+     <a-entity laser-controls="hand: left" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
+
+     <a-box id="right-building" position="7 2.25 -20" scale="3 4.5 2" color="#C0C0C0"></a-box>
+     <a-box class="window" position="6 3 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="7 3 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="8 3 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="6 2 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="7 2 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="8 2 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="6 1 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="7 1 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="8 1 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+
+     <a-box id="left-building" position="-7 3.75 -20" scale="3 7.5 2" color="#C0C0C0"></a-box>
+     <a-box class="window" position="-8 5 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-7 5 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-6 5 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-8 4 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-7 4 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-6 4 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-8 3 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-7 3 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-6 3 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-8 2 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-7 2 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-6 2 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-8 1 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-7 1 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-6 1 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+
+     <a-box id="main-building" position="0 1.5 -20" scale="5 3 2" color="#C0C0C0"></a-box>
+     <a-box class="window" position="-1 2 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="0 2 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="1 2 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="-1 1 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="0 1 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+     <a-box class="window" position="1 1 -18.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
+
+     <a-box id="rooftop-structure" position="0 3.75 -20" scale="2 1.5 1.5" color="#C0C0C0"></a-box>
+     <a-torus id="clock-face" position="0 3.75 -19.2" radius="0.5" radius-tubular="0.05" color="#B22222" rotation="0 0 0"></a-torus>
+     <a-plane position="0 0 -20" rotation="-90 0 0" width="30" height="30" color="#808000"></a-plane>
+    </a-scene>
     
     <div class="message-box" id="clear-message-box" style="display: none;">
         <p>Congratulations!</p>
@@ -105,17 +105,13 @@
         const INITIAL_TIME = 30;
         const totalTargets = 5;
 
-        // start-game-on-click コンポーネントは不要になったため削除
-
         $(function() {
             const windows = $('.window');
-            // startSphereGroup の取得は不要になったため削除
 
             // 初期状態の設定
             $('#clear-message-box').hide();
             $('#game-over-message-box').hide();
             $('#timer-display').hide();
-            // スタート用立体の表示/非表示制御は不要
 
             // ゲーム開始処理
             function startGame() {
@@ -124,8 +120,6 @@
                 $('#clear-message-box').hide();
                 $('#timer-display').show();
                 
-                // スタート用立体の非表示処理は不要
-
                 // すべての窓を元の色にリセット
                 windows.attr('color', '#4169E1');
                 windows.removeClass('target-window'); 
@@ -187,44 +181,47 @@
             }
 
             // ゲーム終了処理 (クリア or ゲームオーバー)
-    function endGame(isCleared) {
-        window.gameStarted = false;
-        $('#timer-display').hide(); 
+            function endGame(isCleared) {
+                window.gameStarted = false;
+                $('#timer-display').hide(); 
 
-    // フェードアウトの完了後に実行する処理
-        const redirectToIndex = function() {
-        // 現在のページを index.html にリダイレクトする
-            window.location.href = 'index.html';
-        };
+                // フェードアウトの完了後に実行するリダイレクト処理
+                const redirectToIndex = function() {
+                    // 【重要】A-Frameの没入モードを終了させる
+                    const sceneEl = document.querySelector('a-scene');
+                    if (sceneEl && sceneEl.is('vr-mode')) {
+                        sceneEl.exitVR(); // 没入モードから離脱
+                    }
 
-        if (isCleared) {
-            $('#clear-message-box').show();
-            setTimeout(function() {
-            // ① フェードアウト完了後、redirectToIndexを実行するように変更
-                $('#clear-message-box').fadeOut(400, redirectToIndex);
-            }, 3000); 
-        } else {
-            $('#game-over-message-box').show(); 
-            setTimeout(function() {
-            // ② フェードアウト完了後、redirectToIndexを実行するように変更
-            $('#game-over-message-box').fadeOut(400, redirectToIndex);
-        }, 3000); 
-    }
-}
+                    // exitVRが完了するのを待つため、わずかに遅延させてリダイレクトを実行
+                    setTimeout(() => {
+                         window.location.href = 'index.html';
+                    }, 100); // 100ミリ秒の遅延
+                };
+
+                if (isCleared) {
+                    $('#clear-message-box').show();
+                    setTimeout(function() {
+                        // フェードアウト完了後にリダイレクト関数を実行
+                        $('#clear-message-box').fadeOut(400, redirectToIndex);
+                    }, 3000); 
+                } else {
+                    $('#game-over-message-box').show(); 
+                    setTimeout(function() {
+                        // フェードアウト完了後にリダイレクト関数を実行
+                        $('#game-over-message-box').fadeOut(400, redirectToIndex);
+                    }, 3000); 
+                }
+            }
 
             $('a-scene').on('loaded', function() {
                 startGame();
             });
 
-            // 念のため jQuery の DOM Ready でも実行しておく（保険として）
-            // startGame();
-            
-            // 関数をグローバルスコープに設定（今回は外部からのアクセスは不要になりましたが、以前の慣習として残すこともできます）
+            // 関数をグローバルスコープに設定
             window.startGame = startGame;
             window.endGame = endGame;
         });
     </script>
 </body>
 </html>
-
-
