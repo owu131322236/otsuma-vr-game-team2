@@ -12,7 +12,7 @@
 <body>
   <a-scene>
     <!-- 背景画像 -->
-    <a-sky src="image_3D/sora.jpg"></a-sky>
+    <a-sky src="sora.jpg"></a-sky>
 
     <!-- カメラ＋カーソル -->
     <a-entity id="cameraRig" position="0 1.6 0">
@@ -48,7 +48,8 @@
     <a-entity id="target-container"></a-entity>
     <a-entity laser-controls="hand: right"
           raycaster="objects: .clickable; lineColor: red; lineOpacity: 0.8;">
-	  </a-entity>
+	</a-entity>
+
   </a-scene>
 
   <script>
@@ -65,9 +66,9 @@
     const startText = document.getElementById("start-text");
 
     const birds = [
-      { src: "image_3D/tori.png",     point: 1,  weight: 55, speed: 2 },
-      { src: "image_3D/karasu.png",   point: -3, weight: 30, speed: 3 },
-      { src: "image_3D/aoitori.png",  point: 3,  weight: 15, speed: 4 }
+      { src: "tori.png",     point: 1,  weight: 55, speed: 2 },
+      { src: "karasu.png",   point: -3, weight: 30, speed: 3 },
+      { src: "aoitori.png",  point: 3,  weight: 15, speed: 4 }
     ];
 
     function getRandomBird() {
@@ -168,4 +169,3 @@
   </script>
 </body>
 </html>
-
