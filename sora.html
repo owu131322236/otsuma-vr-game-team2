@@ -8,13 +8,17 @@
 </head>
 <body>
 
-  <a-scene physics="driver: ammo; gravity: -2" >
+  <a-scene physics="driver: ammo ; gravity: -2" >
 
     <a-sky color="#ABE1FA"></a-sky>
     
     
-    <a-entity laser-controls="hand: right" cursor="fuse: false" raycaster="objects: .clickable-ball, .clickable; lineColor: red; lineOpacity: 0.8;"></a-entity>
+    <a-entity id="rig" position="0 1.6 4">
+      <a-camera></a-camera>
+    </a-entity>
 
+    
+    <a-entity laser-controls="hand: right" cursor="fuse: false" raycaster="objects: .clickable-ball, .clickable; lineColor: red; lineOpacity: 0.8;"></a-entity>
 
     <a-cylinder
       id="trampoline"
@@ -39,9 +43,6 @@
       <a-sphere radius="1.5" color="#ffffff" opacity="0.9" transparent="true"></a-sphere>
     </a-cylinder>
 
-
-    
- 
 	<a-entity position="-7 6 -16" scale="2 2 2">
 	    <a-sphere radius="1.2" position="0 0 0" color="#ffffff"></a-sphere>
 	    <a-sphere radius="1.2" position="1.2 0 0" color="#ffffff"></a-sphere>
@@ -55,7 +56,6 @@
 	    <a-sphere radius="0.5" position="-0.5 0.8 -0.5" color="#ffffff"></a-sphere>
 	    <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
 	</a-entity>
-
 
 	<a-entity position="8 12 -18" scale="1.8 1.8 1.8">
 	    <a-sphere radius="1.2" position="0 0 0" color="#ffffff"></a-sphere>
@@ -71,8 +71,6 @@
 	    <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
 	</a-entity>
 	
-	
-	
 	<a-entity position="12 3 -16" scale="1.8 1.8 1.8">
 	    <a-sphere radius="1.2" position="0 0 0" color="#ffffff"></a-sphere>
 	    <a-sphere radius="1.2" position="1.2 0 0" color="#ffffff"></a-sphere>
@@ -86,7 +84,6 @@
 	    <a-sphere radius="0.5" position="-0.5 0.8 -0.5" color="#ffffff"></a-sphere>
 	    <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
 	</a-entity>
-	
 	
 	<a-entity position="-17 -7 -18" scale="1.8 1.8 1.8">
 	    <a-sphere radius="1.2" position="0 0 0" color="#ffffff"></a-sphere>
@@ -102,17 +99,13 @@
 	    <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
 	</a-entity>
 
-
 	    <a-text id="final-score" value="" position="0 2 -3" align="center" color="#ff69b4" visible="false" width="6"></a-text>
 	    <a-text id="score" value="Score: 0" position="-2 2 -3" color="black"></a-text>
 	    <a-text id="timer" value="Time: 30" position="1.2 2 -3" color="black"></a-text>
 
-	
-
     <!-- 終了ボタン -->
     <a-sphere 
-        id="end-button" 
-        class="clickable" 
+        id="end-button"  
         position="0 1.2 -2" 
         radius="0.4"
         color="#ffc0cb"
@@ -133,11 +126,19 @@
         visible="false"
         font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt"
         ></a-text>
-	
 	  </a-scene>
 
   <script>
     const scene = document.querySelector("a-scene");
+    
+    // ゲーム終了ボタンを取得
+    const endButton = document.getElementById("end-button");
+    const endText = document.getElementById("end-text");
+    
+    // 安全策：最初はクリック不可
+	endButton.classList.remove("clickable");
+	
+	
     const trampoline = document.querySelector("#trampoline");
 
     trampoline.addEventListener("body-loaded", () => {
@@ -165,19 +166,19 @@
     let droppedBalls = 0;
     
     
+    
     let clickedBalls = 0; 
 
-    const totalBalls = 10;
+    const totalBalls = 29;
     const scoreDisplay = document.getElementById("score");
     const finalScoreDisplay = document.getElementById("final-score");
-
+    
     function checkGameEnd() {
       if (droppedBalls >= totalBalls) {
         finalScoreDisplay.setAttribute("value", `Score: ${score}`);
         finalScoreDisplay.setAttribute("visible", "true");
       }
     }
-
     
     function getRandomPastelColor() {
       const hue = Math.floor(Math.random() * 360);
@@ -194,17 +195,31 @@
 	  sphere.setAttribute("class", "clickable-ball");
 	  sphere.setAttribute("cursor-listener", ""); 
 	  
-	  
-	  
 	  let isGoldBall = (i === Math.floor(Math.random() * totalBalls)) || (i === Math.floor(Math.random() * totalBalls));
+	  
+		
+    //金色
+  //if (isGoldBall) {
+  //   sphere.setAttribute("color", "gold"); 
+  //   sphere.setAttribute("data-special", "gold");
+  // } else {
+  //   let randomColor = getRandomPastelColor();
+  //   sphere.setAttribute("color", randomColor);
+  // }
 
-  if (isGoldBall) {
-    sphere.setAttribute("color", "gold"); 
-    sphere.setAttribute("data-special", "gold");
-  } else {
-    let randomColor = getRandomPastelColor();
-    sphere.setAttribute("color", randomColor);
-  }
+    if (isGoldBall) {
+      sphere.setAttribute("data-special", "gold");
+      sphere.setAttribute("material", {
+        color: "#FFFACD",           // 濃い金色（DarkGoldenRod）
+        metalness: 0.8,             // より金属的に
+        roughness: 0.2,             // 反射を強く
+        emissive: "#FFD700",        // 金色に近い発光
+        emissiveIntensity: 0.5      // 発光を強めてリッチな輝きに
+      });
+    } else {
+      let randomColor = getRandomPastelColor();
+      sphere.setAttribute("color", randomColor);
+    }
 
 	  let randomX = Math.random() * 3 - 1.5;
 	  sphere.setAttribute("position", `${randomX} 5 -5`);
@@ -231,11 +246,9 @@
 	      
 	      clickedBalls++;
 	      
-	      
 	      scoreDisplay.setAttribute("value", `Score: ${score}`);
 	      this.el.setAttribute("data-scored", "true");
 
-	      
 	      //this.el.setAttribute("color", "#FF69B4"); 
 	      this.el.setAttribute("color", "#00bfff"); 
 	      
@@ -245,8 +258,6 @@
 			  finalScoreDisplay.setAttribute("visible", true);
 			}
 			
-			
-		
                 const textEntity = document.createElement('a-entity');
                 textEntity.setAttribute('position', '0 0 0.5'); 
                 textEntity.setAttribute('text', {
@@ -283,13 +294,19 @@
 	  }
 	});
 	
-	let timeLeft = 20; 
+	let timeLeft = 30; 
 
 	const timerDisplay = document.getElementById("timer");
 
 	const timerInterval = setInterval(() => {
 	  timeLeft--;
 	  timerDisplay.setAttribute("value", `Time: ${timeLeft}`);
+	  
+	  if (timeLeft <= 3) {
+	    timerDisplay.setAttribute("color", "red");
+	  } else {
+	    timerDisplay.setAttribute("color", "black");
+	  }	  
 	  
 	  if (timeLeft <= 0) {
 	    clearInterval(timerInterval);
@@ -308,30 +325,31 @@
     // Dobiiに戻るボタンを表示
     endButton.setAttribute("visible", true);
     endText.setAttribute("visible", true);
+    
+     // クリック対象に追加
+  	endButton.classList.add("clickable");
     }
 
-
-	
 	function checkGameEnd() {
 	  if (clickedBalls === totalBalls && droppedBalls === totalBalls) {
 	    clearInterval(timerInterval);
 	    endGame(); 
 	  }
 	}
-    for (let i = 0; i < 19; i++) {
+	
+	
+    for (let i = 0; i < 29; i++) {
       setTimeout(() => dropSphere(i), i * 1000);
     }
-    
-        // ゲーム終了ボタンを取得
-    const endButton = document.getElementById("end-button");
-    const endText = document.getElementById("end-text");
 
-    // クリックでindex.htmlへ遷移
+    // クリックでindex.html
     endButton.addEventListener("click", () => {
-    window.location.href = "index.html";
+        const isVisible = endButton.getAttribute("visible");
+        if (isVisible) {
+            window.location.href = "index.html";
+        }
     });
-    
-    
+
   </script>
 </body>
 </html>
