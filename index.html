@@ -643,12 +643,9 @@
       <a-entity
         id="cameraRig"
         position="0 1.6 30"
-        movement-controls="fly: false; speed: 0.2; constrainToNavMesh: false"
+        movement-controls="fly: false; speed: 0.2;"
       >
-        <a-entity
-          camera
-          look-controls="pointerLockEnabled: true; reverseMouseDrag: true"
-        >
+        <a-entity camera look-controls="pointerLockEnabled: true">
           <a-image
             id="explainHud"
             visible="false"
@@ -657,19 +654,21 @@
             height="1.5"
           ></a-image>
         </a-entity>
+        <a-entity
+          id="leftHand"
+          hand-controls="hand: left; handModelStyle: lowPoly; color: #fff"
+          laser-controls="hand: left"
+          raycaster="objects: .clickable"
+          line="opacity: 0.9"
+        ></a-entity>
+        <a-entity
+          id="rightHand"
+          hand-controls="hand: right; handModelStyle: lowPoly; color: #fff"
+          laser-controls="hand: right"
+          raycaster="objects: .clickable"
+          line="opacity: 0.9"
+        ></a-entity>
       </a-entity>
-      <a-entity
-        id="rightHand"
-        laser-controls="hand: right"
-        raycaster="objects: .clickable"
-        line="opacity: 0.9"
-      ></a-entity>
-      <a-entity
-        id="leftHand"
-        laser-controls="hand: left"
-        raycaster="objects: .clickable"
-        line="opacity: 0.9"
-      ></a-entity>
     </a-scene>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
