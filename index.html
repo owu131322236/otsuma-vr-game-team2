@@ -4,123 +4,672 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
     <link rel="stylesheet" href="stylesheet.css" />
+    <script>
+      AFRAME.registerComponent("hover-link", {
+        schema: {
+          url: { type: "string" },
+          hud: { type: "selector" },
+          img: { type: "selector" },
+        },
+        init: function () {
+          const hud = this.data.hud;
+          const img = this.data.img;
+
+          this.el.addEventListener("mouseenter", () => {
+            if (!hud || !img) return;
+            hud.setAttribute("src", `#${img.id}`);
+            hud.setAttribute("visible", true);
+          });
+
+          this.el.addEventListener("mouseleave", () => {
+            if (hud) hud.setAttribute("visible", false);
+          });
+
+          this.el.addEventListener("click", () => {
+            if (this.data.url) window.location.href = this.data.url;
+          });
+        },
+      });
+    </script>
   </head>
   <body>
     <a-scene background="color: #020617">
-      <a-plane position="0 0 0"
-         rotation="-90 0 0"
-         width="100"
-         height="100"
-         material="shader: flat; color: #4caf50;">
-      </a-plane>
-      <a-text value="Welcome to Ichimura seminor" position="0 10 20" rotation="0 0 0" color="#fff" width="30" align="center"></a-text>
-      <a-entity id="moon"
-          geometry="primitive: sphere; radius: 4;"
-          material="color: #FFFFA6; emissive: #fff6aa; emissiveIntensity: 0.9; shader: flat;"
-          position="-50 35 -20">
+      <a-entity
+        cursor="rayOrigin: mouse"
+        raycaster="objects: .clickable"
+      ></a-entity>
+      <!-- 外装 -->
+      <a-text
+        value="Welcome to Ichimura seminor"
+        position="0 10 20"
+        rotation="0 0 0"
+        color="#fff"
+        width="30"
+        align="center"
+      ></a-text>
+      <a-entity
+        id="moon"
+        geometry="primitive: sphere; radius: 4;"
+        material="color: #FFFFA6; emissive: #fff6aa; emissiveIntensity: 0.9; shader: flat;"
+        position="-50 35 -20"
+      >
       </a-entity>
-      <a-entity light="type: directional; color: #ddeeff; intensity: 0.2"
-                  position="-50 35 -20"
-                  target="#moon">
+
+      <a-entity
+        light="type: directional; color: #ddeeff; intensity: 0.2"
+        position="-50 35 -20"
+        target="#moon"
+      >
       </a-entity>
       <!-- ====== 外観 ====== -->
-      <a-box position="0 4.5 0" width="33" height="9" depth="33"
-      material="color: #cce6ff; opacity: 0.3; roughness: 0.2; metalness: 0.4;">
-      </a-box>
-      <a-box position="0 9.5 0" width="33.5" height="0.2" depth="33.5" color="#aaaaaa"></a-box>
-      <a-box position="0 0 0" width="33.5" height="0.2" depth="33.5" color="#999999"></a-box>
-      <a-cylinder position="16 4 16" radius="0.2" height="9" color="#888"></a-cylinder>
-      <a-cylinder position="-16 4 16" radius="0.2" height="9" color="#888"></a-cylinder>
-      <a-cylinder position="16 4 -16" radius="0.2" height="9" color="#888"></a-cylinder>
-      <a-cylinder position="-16 4 -16" radius="0.2" height="9" color="#888"></a-cylinder>
-      <a-box position="0 0.2 16.5" width="18" height="0.4" depth="2.5" color="#dddddd"></a-box>
-      <a-box position="0 0.0 17.5" width="20" height="0.4" depth="2.5" color="#cccccc"></a-box>
-      <a-box position="0 9.9 0" width="33.3" height="0.05" depth="33.3"
-         material="emissive: #88ccff; emissiveIntensity: 0.8; shader: flat;">
-      </a-box>
-      <!-- 地面 -->
-      <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#5a8f5a"></a-plane>
-      <!-- =========内装=========== -->
+      <!-- 外壁 -->
+      <a-box
+        position="0 4 0"
+        width="30"
+        height="8"
+        depth="30"
+        color="#fffaf0"
+      ></a-box>
+
       <!-- 壁 -->
-      <a-box position="0 4 0" width="30" height="8" depth="30" color="#ffffff"></a-box>
-      <a-box position="0 4 0" width="29" height="7.5" depth="29" color="#ffffff" opacity="0"></a-box>
+      <a-box
+        position="0 4 0"
+        width="30"
+        height="8"
+        depth="30"
+        color="#ffffff"
+      ></a-box>
+
+      <!-- 柱 -->
+      <a-cylinder
+        position="15 4 15"
+        radius="0.25"
+        height="8"
+        color="#e6d8b5"
+      ></a-cylinder>
+      <a-cylinder
+        position="-15 4 15"
+        radius="0.25"
+        height="8"
+        color="#e6d8b5"
+      ></a-cylinder>
+      <a-cylinder
+        position="15 4 -15"
+        radius="0.25"
+        height="8"
+        color="#e6d8b5"
+      ></a-cylinder>
+      <a-cylinder
+        position="-15 4 -15"
+        radius="0.25"
+        height="8"
+        color="#e6d8b5"
+      ></a-cylinder>
+
+      <!-- エントランス前の大理石階段 -->
+      <a-box
+        position="0 0.25 16"
+        width="20"
+        height="0.4"
+        depth="2.5"
+        color="#f5deb3"
+      ></a-box>
+      <a-box
+        position="0 0.0 17.5"
+        width="22"
+        height="0.4"
+        depth="2.5"
+        color="#e6d8b5"
+      ></a-box>
+
       <!-- 玄関ドア -->
-        <a-box id="doorB" position="-2.1 2 15" depth="0.2" height="4" width="2" color="#663300" class="clickable" rotation="0 180 0">
-            <a-box position="0 0 -0.01" depth="0.01" height="4.2" width="2.2" color="#daa520"></a-box>
-            <a-sphere position="-0.7 0 -0.2" radius="0.1" color="#ffd700"></a-sphere>
-        </a-box>
-        <a-box id="doorB" position="0 2 15" depth="0.2" height="4" width="2" color="#663300" class="clickable" rotation="0 180 0">
-            <a-box position="0 0 -0.01" depth="0.01" height="4.2" width="2.2" color="#daa520"></a-box>
-            <a-sphere position="0.7 0 -0.2" radius="0.1" color="#ffd700"></a-sphere>
-        </a-box>
-        <a-text value="Room B" align="center" position="0 4 14.8" rotation="0 180 0" color="#333" width="6"></a-text>
-      <!-- ====== ロビー ====== -->
-        <!-- 照明 -->
-        <a-entity light="type: ambient; intensity: 0.6; color: #ffffff"></a-entity>
-        <a-entity light="type: spot; intensity: 1.5; angle: 45; penumbra: 0.3; target: #floor" position="0 8 0"></a-entity>
-        <a-entity id="floor"></a-entity>
-  
-        <!-- 床 -->
-        <a-plane position="0 0.1 0" rotation="-90 0 0" width="30" height="30" color="#e0e0e0" material="roughness:0.1; metalness:0.3;"></a-plane>
-  
-        <!-- 天井 -->
-        <a-plane position="0 8 0" rotation="90 0 0" width="30" height="30" color="#fafafa"></a-plane>
-  
-        <!-- 壁 -->
-        <a-plane position="0 4 -15" rotation="0 0 0" width="30" height="8" color="#ffffff"></a-plane>
-        <a-plane position="0 4 15" rotation="0 180 0" width="30" height="8" color="#ffffff"></a-plane>
-        <a-plane position="15 4 0" rotation="0 -90 0" width="30" height="8" color="#ffffff"></a-plane>
-        <a-plane position="-15 4 0" rotation="0 90 0" width="30" height="8" color="#ffffff"></a-plane>
-  
-        <!-- 柱 -->
-        <a-cylinder position="-10 4 -10" radius="0.5" height="8" color="#dcdcdc"></a-cylinder>
-        <a-cylinder position="10 4 -10" radius="0.5" height="8" color="#dcdcdc"></a-cylinder>
-        <a-cylinder position="-10 4 10" radius="0.5" height="8" color="#dcdcdc"></a-cylinder>
-        <a-cylinder position="10 4 10" radius="0.5" height="8" color="#dcdcdc"></a-cylinder>
-  
-        <!-- カーペット -->
-        <a-plane position="0 0.12 0" rotation="-90 0 0" width="4" height="25" color="#b22222"></a-plane>
-        <!-- ドア（前） -->
-        <a-box id="doorA" position="0 2 -14.9" depth="0.2" height="4" width="2" color="#663300" class="clickable">
-            <a-box position="0 0 0.01" depth="0.01" height="4.2" width="2.2" color="#daa520"></a-box>
-            <a-sphere position="0.7 0 0.2" radius="0.1" color="#ffd700"></a-sphere>
-        </a-box>
-        <a-text value="Room A" align="center" position="0 4 -14.8" color="#333" width="6"></a-text>
-        
-        <!-- ドア（左） -->
-        <a-box id="doorC" position="-14.9 2 0" depth="2" height="4" width="0.2" color="#663300" class="clickable" rotation="0 0 0">
-            <a-box position="0 0 0.01" depth="0.01" height="4.2" width="2.2" rotation="0 -90 0" color="#daa520"></a-box>
-            <a-sphere position="0.2 0 0.7" radius="0.1" color="#ffd700"></a-sphere>
-        </a-box>
-        <a-text value="Room C" align="center" position="-14.8 4 0" rotation="0 90 0" color="#333" width="6"></a-text>
-    
-        <!-- ドア（右） -->
-        <a-box id="doorD" position="14.9 2 0" depth="2" height="4" width="0.2" color="#663300" class="clickable" rotation="0 0 0">
-            <a-box position="0 0 0.01" depth="0.01" height="4.2" width="2.2" rotation="0 90 0" color="#daa520"></a-box>
-            <a-sphere position="0.2 0 -0.7" radius="0.1" color="#ffd700"></a-sphere>
-        </a-box>
-        <a-text value="Room D" align="center" position="14.8 4 0" rotation="0 -90 0" color="#333" width="6"></a-text>
+      <a-box
+        id="doorB"
+        position="-1.05 2 15"
+        depth="0.2"
+        height="4"
+        width="2"
+        color="#663300"
+        class="clickable"
+        rotation="0 180 0"
+      >
+        <a-box
+          position="0 0 -0.01"
+          depth="0.01"
+          height="4.2"
+          width="2.2"
+          color="#daa520"
+        ></a-box>
+        <a-sphere
+          position="-0.7 0 -0.2"
+          radius="0.1"
+          color="#ffd700"
+        ></a-sphere>
+      </a-box>
+      <a-box
+        id="doorB"
+        position="1.05 2 15"
+        depth="0.2"
+        height="4"
+        width="2"
+        color="#663300"
+        class="clickable"
+        rotation="0 180 0"
+      >
+        <a-box
+          position="0 0 -0.01"
+          depth="0.01"
+          height="4.2"
+          width="2.2"
+          color="#daa520"
+        ></a-box>
+        <a-sphere position="0.7 0 -0.2" radius="0.1" color="#ffd700"></a-sphere>
+      </a-box>
+      <a-text
+        value="Room B"
+        align="center"
+        position="0 4 14.8"
+        rotation="0 180 0"
+        color="#333"
+        width="6"
+      ></a-text>
+
+      <!-- 上下金の装飾 -->
+      <a-box
+        position="0 8.05 0"
+        width="30.2"
+        height="0.12"
+        depth="30.2"
+        color="#d4af37"
+      ></a-box>
+      <a-box
+        position="0 -0.05 0"
+        width="30.2"
+        height="0.12"
+        depth="30.2"
+        color="#d4af37"
+      ></a-box>
+
+      <!-- 玄関上アーチ -->
+      <a-torus
+        radius="3"
+        radius-tubular="0.15"
+        position="0 6.5 15"
+        rotation="90 0 0"
+        color="#d4af37"
+      ></a-torus>
+
+      <!-- 玄関上丸いシンボル -->
+      <a-sphere position="0 8.2 15" radius="0.6" color="#fffdd0"></a-sphere>
+      <a-text
+        value="B"
+        position="0 8.2 14.4"
+        align="center"
+        color="#6b4a00"
+        width="3"
+      ></a-text>
+
+      <!-- 金のトリム -->
+      <a-box
+        position="0 9 0"
+        width="33.3"
+        height="0.15"
+        depth="33.3"
+        color="#d4af37"
+      ></a-box>
+      <a-box
+        position="0 0 0"
+        width="33.3"
+        height="0.15"
+        depth="33.3"
+        color="#d4af37"
+      ></a-box>
+
+      <!-- 支柱を白と金で装飾 -->
+      <a-cylinder
+        position="16 4 16"
+        radius="0.25"
+        height="9"
+        color="#fff"
+      ></a-cylinder>
+      <a-cylinder
+        position="16 4 16"
+        radius="0.28"
+        height="0.4"
+        color="#d4af37"
+        position="16 8.8 16"
+      ></a-cylinder>
+      <a-cylinder
+        position="-16 4 16"
+        radius="0.25"
+        height="9"
+        color="#fff"
+      ></a-cylinder>
+      <a-cylinder
+        position="-16 4 -16"
+        radius="0.25"
+        height="9"
+        color="#fff"
+      ></a-cylinder>
+      <a-cylinder
+        position="16 4 -16"
+        radius="0.25"
+        height="9"
+        color="#fff"
+      ></a-cylinder>
+      <!-- 光るシンボル -->
+      <a-sphere radius="0.6" color="#fffdd0" position="0 8 15"></a-sphere>
+      <a-entity
+        light="type: point; color: #fff2b0; intensity: 1.2; distance: 5"
+        position="0 8 15"
+      ></a-entity>
+      <a-text
+        value="B"
+        position="0 8.2 14.4"
+        align="center"
+        color="#6b4a00"
+        width="3"
+      ></a-text>
       
-        <!-- シャンデリア -->
-        <a-sphere position="0 7 0" radius="0.5" color="#ffd700" material="emissive: #ffd700; emissiveIntensity: 0.6;"></a-sphere>
+      <!-- ====== ロビー ====== -->
+      <a-assets>
+        <img id="p1" src="images/image2.jpeg" />
+        <img id="p2" src="images/image3.png" />
+        <img id="p3" src="images/image1.jpeg" />
 
-        <!-- カメラなど -->
-        <a-entity id="cameraRig" position="0 1.6 30">
-            <a-entity camera look-controls wasd-controls>
-            <a-entity cursor="rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
-            </a-entity>
-        </a-entity>
-        <a-entity id="rightHand"
-          laser-controls="hand: right"
-          raycaster="objects: .clickable"   
-          line="opacity: 0.9">       
-        </a-entity>
-        <a-entity id="leftHand"
-                laser-controls="hand: left"
-                raycaster="objects: .clickable"
-                line="opacity: 0.9">
-        </a-entity>
+        <img id="explain1" src="images/explain1.jpg" />
+        <img id="explain2" src="images/explain2.jpg" />
+        <img id="explain3" src="images/explain3.jpg" />
+      </a-assets>
 
+      <a-entity
+        cursor="rayOrigin: mouse"
+        raycaster="objects: .clickable"
+      ></a-entity>
+      <!-- ゆか -->
+      <a-plane
+        rotation="-90 0 0"
+        width="26"
+        height="16"
+        color="#d8dde6"
+        position="0 0.01 0"
+      ></a-plane>
+      <a-entity id="floor-lines">
+        <a-box
+          depth="0.02"
+          height="0.005"
+          width="26"
+          color="#c2c9d5"
+          position="0 0.02 -7"
+        ></a-box>
+        <a-box
+          depth="0.02"
+          height="0.005"
+          width="26"
+          color="#c2c9d5"
+          position="0 0.02 -5"
+        ></a-box>
+        <a-box
+          depth="0.02"
+          height="0.005"
+          width="26"
+          color="#c2c9d5"
+          position="0 0.02 -3"
+        ></a-box>
+        <a-box
+          depth="0.02"
+          height="0.005"
+          width="26"
+          color="#c2c9d5"
+          position="0 0.02 -1"
+        ></a-box>
+        <a-box
+          depth="0.02"
+          height="0.005"
+          width="26"
+          color="#c2c9d5"
+          position="0 0.02  1"
+        ></a-box>
+        <a-box
+          depth="0.02"
+          height="0.005"
+          width="26"
+          color="#c2c9d5"
+          position="0 0.02  3"
+        ></a-box>
+        <a-box
+          depth="0.02"
+          height="0.005"
+          width="26"
+          color="#c2c9d5"
+          position="0 0.02  5"
+        ></a-box>
+        <a-box
+          depth="0.02"
+          height="0.005"
+          width="26"
+          color="#c2c9d5"
+          position="0 0.02  7"
+        ></a-box>
+      </a-entity>
+      <!-- 壁 -->
+      <a-entity id="interior-room" position="0 4 0">
+        <!-- 天井 -->
+        <a-box
+          width="26"
+          height="0.2"
+          depth="26"
+          position="0 4 0"
+          color="#f0f0f0"
+        ></a-box>
+
+        <!-- 床 -->
+        <a-box
+          width="26"
+          height="0.2"
+          depth="26"
+          position="0 -4 0"
+          color="#e0e0e0"
+        ></a-box>
+
+        <!-- 前面の壁 -->
+        <a-box
+          width="26"
+          height="8"
+          depth="0.2"
+          position="0 0 13"
+          color="#ffffff"
+          material="side: double; roughness: 0.7; metalness: 0.1;"
+        ></a-box>
+
+        <!-- 背面の壁 -->
+        <a-box
+          width="26"
+          height="8"
+          depth="0.2"
+          position="0 0 -13"
+          color="#ffffff"
+          material="side: double; roughness: 0.7; metalness: 0.1;"
+        ></a-box>
+
+        <!-- 左の壁 -->
+        <a-box
+          width="0.2"
+          height="8"
+          depth="26"
+          position="-13 0 0"
+          color="#ffffff"
+          material="side: double; roughness: 0.7; metalness: 0.1;"
+        ></a-box>
+
+        <!-- 右の壁 -->
+        <a-box
+          width="0.2"
+          height="8"
+          depth="26"
+          position="13 0 0"
+          color="#ffffff"
+          material="side: double; roughness: 0.7; metalness: 0.1;"
+        ></a-box>
+      </a-entity>
+
+      <!-- 内装だけど、はみ出してしまうので一旦コメントアウト
+      <a-entity position="6 2.5 0">
+        <a-entity
+          geometry="primitive: cylinder; radius: 12; height: 5; thetaLength: 110; thetaStart: 55; openEnded: true"
+          material="color: #cfd8e6; side: back"
+        ></a-entity>
+
+        <a-entity
+          geometry="primitive: cylinder; radius: 12.02; height: 0.12; thetaLength: 110; thetaStart: 55; openEnded: true"
+          position="6 2.6 0"
+          material="color: #b8c3d6; side: back"
+        ></a-entity>
+
+        <a-entity
+          geometry="primitive: cylinder; radius: 12.02; height: 0.12; thetaLength: 110; thetaStart: 55; openEnded: true"
+          position="6 -2.6 0"
+          material="color: #b8c3d6; side: back"
+        ></a-entity>
+      </a-entity> -->
+
+      <!-- 作品画像 -->
+      <a-entity id="frames">
+        <a-box
+          color="#e6d2a4"
+          depth="0.1"
+          height="2.4"
+          width="1.9"
+          position="0 3.2 -8"
+          rotation="0 0 0"
+        ></a-box>
+        <a-plane
+          src="#p1"
+          width="1.5"
+          height="1.9"
+          position="0 3.2 -7.15"
+        ></a-plane>
+
+        <a-box
+          color="#e6d2a4"
+          depth="0.1"
+          height="2.4"
+          width="1.9"
+          position="-5.2 4.2 -6.8"
+          rotation="0 10 0"
+        ></a-box>
+        <a-plane
+          src="#p2"
+          width="1.5"
+          height="2"
+          position="-4.9 4 -6"
+          rotation="0 10 0"
+        ></a-plane>
+
+        <a-box
+          color="#e6d2a4"
+          depth="0.1"
+          height="2.4"
+          width="1.9"
+          position="6.2 4.5 -6.8"
+          rotation="0 -10 0"
+        ></a-box>
+        <a-plane
+          src="#p3"
+          width="1.5"
+          height="1.9"
+          position="6.1 4.5 -6.55"
+          rotation="0 -10 0"
+        ></a-plane>
+      </a-entity>
+      <!-- 説明文 -->
+      <a-plane
+        class="clickable"
+        position="0 3.2 -7.14"
+        rotation="0 0 0"
+        width="1.5"
+        height="1.9"
+        material="color: #fff; opacity: 0.01; transparent: true"
+        hover-link="url: tori.html; hud: #explainHud; img: #explain2"
+      ></a-plane>
+
+      <a-plane
+        class="clickable"
+        position="-4.9 4 -5.99"
+        rotation="0 10 0"
+        width="1.5"
+        height="2"
+        material="color: #fff; opacity: 0; transparent: true"
+        hover-link="url: index2.html; hud: #explainHud; img: #explain1"
+      ></a-plane>
+
+      <a-plane
+        class="clickable"
+        position="6.1 4.5 -6.54"
+        rotation="0 -10 0"
+        width="1.5"
+        height="1.9"
+        material="color: #fff; opacity: 0; transparent: true"
+        hover-link="url: sora.html; hud: #explainHud; img: #explain3"
+      ></a-plane>
+
+      <a-entity position="2.2 0 -6.6" rotation="0 -8 0">
+        <a-box
+          width="0.9"
+          depth="0.9"
+          height="0.9"
+          color="#aeb8c8"
+          position="0 0.45 0"
+        ></a-box>
+        <a-cylinder
+          radius="0.35"
+          height="1.2"
+          color="#bfc9d8"
+          position="0 1.5 0"
+        ></a-cylinder>
+        <a-sphere radius="0.35" color="#dde4ef" position="0 2.3 0"></a-sphere>
+      </a-entity>
+
+      <a-entity position="-2.8 0.9 -3.2" rotation="-5 12 0">
+        <a-box
+          width="1.6"
+          depth="0.9"
+          height="0.6"
+          color="#b9c4d6"
+          position="0 0.3 0"
+        ></a-box>
+        <a-box
+          width="1.5"
+          depth="0.8"
+          height="0.8"
+          material="color: #ffffff; opacity: 0.15; transparent: true; side: double"
+          position="0 1.0 0"
+        ></a-box>
+        <a-box
+          width="0.9"
+          depth="0.02"
+          height="0.18"
+          color="#ffffff"
+          position="0 0.12 0.5"
+        ></a-box>
+      </a-entity>
+
+      <a-entity id="posts" position="0 0 -4.2">
+        <a-cylinder
+          radius="0.04"
+          height="0.7"
+          color="#b3bdcd"
+          position="-6 0.35 -2"
+        ></a-cylinder>
+        <a-cylinder
+          radius="0.04"
+          height="0.7"
+          color="#b3bdcd"
+          position="-3 0.35 -1.4"
+        ></a-cylinder>
+        <a-cylinder
+          radius="0.04"
+          height="0.7"
+          color="#b3bdcd"
+          position=" 0 0.35 -1.2"
+        ></a-cylinder>
+        <a-cylinder
+          radius="0.04"
+          height="0.7"
+          color="#b3bdcd"
+          position=" 3 0.35 -1.4"
+        ></a-cylinder>
+        <a-cylinder
+          radius="0.04"
+          height="0.7"
+          color="#b3bdcd"
+          position=" 6 0.35 -2"
+        ></a-cylinder>
+        <a-torus
+          radius="1.5"
+          radius-tubular="0.01"
+          rotation="90 0 0"
+          position="-4.5 0.55 -1.7"
+          color="#d9b36b"
+        ></a-torus>
+        <a-torus
+          radius="1.5"
+          radius-tubular="0.01"
+          rotation="90 0 0"
+          position="-1.5 0.55 -1.35"
+          color="#d9b36b"
+        ></a-torus>
+        <a-torus
+          radius="1.5"
+          radius-tubular="0.01"
+          rotation="90 0 0"
+          position=" 1.5 0.55 -1.35"
+          color="#d9b36b"
+        ></a-torus>
+        <a-torus
+          radius="1.5"
+          radius-tubular="0.01"
+          rotation="90 0 0"
+          position=" 4.5 0.55 -1.7"
+          color="#d9b36b"
+        ></a-torus>
+      </a-entity>
+
+      <a-entity position="0 7 -5.8">
+        <a-torus
+          radius="0.6"
+          radius-tubular="0.04"
+          color="#d9b36b"
+          position="0 0 0"
+        ></a-torus>
+        <a-cone
+          radius-bottom="0.55"
+          radius-top="0.08"
+          height="1.1"
+          color="#f4e9c9"
+          position="0 -0.7 0"
+        ></a-cone>
+        <a-sphere radius="0.07" color="#fff6d1" position="0 -1.25 0"></a-sphere>
+        <a-entity
+          light="type: point; intensity: 1.2; distance: 30; decay: 2"
+          position="0 -1.0 0"
+        ></a-entity>
+      </a-entity>
+
+      <a-entity
+        light="type: ambient; intensity: 0.55; color: #ffffff"
+      ></a-entity>
+      <!-- カメラなど -->
+      <a-entity id="cameraRig" position="0 1.6 30">
+        <a-entity
+          camera
+          move-controls="fly: false; speed: 0.5"
+          look-controls
+          wasd-controls
+        >
+          <a-image
+            id="explainHud"
+            visible="false"
+            position="0 0 -1.8"
+            width="2.5"
+            height="1.5"
+          ></a-image>
+        </a-entity>
+      </a-entity>
+      <a-entity
+        id="rightHand"
+        laser-controls="hand: right"
+        raycaster="objects: .clickable"
+        line="opacity: 0.9"
+      >
+      </a-entity>
+      <a-entity
+        id="leftHand"
+        laser-controls="hand: left"
+        raycaster="objects: .clickable"
+        line="opacity: 0.9"
+      >
+      </a-entity>
     </a-scene>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -151,14 +700,14 @@
           trunk.setAttribute("position", `${x} ${trunkHeight / 2} ${z}`);
 
           // 葉
-          const crownBaseY = trunkHeight;
+          const crownBaseY = trunkHeight;　//幹の上側
           const leafColors = ["#6bc46b", "#74d474", "#5fcf5f"];
 
           for (let j = 0; j < 3; j++) {
             const leaf = document.createElement("a-sphere");
             const offsetX = (Math.random() - 0.5) * 1.0 * scale;
             const offsetZ = (Math.random() - 0.5) * 1.0 * scale;
-            const offsetY = 0.8 + Math.random() * 0.6; 
+            const offsetY = 0.8 + Math.random() * 0.6; //幹の上端から少し上に
             leaf.setAttribute("position", `${x + offsetX} ${crownBaseY + offsetY} ${z + offsetZ}`);
             leaf.setAttribute("radius", 1.2 * scale);
             leaf.setAttribute("color", leafColors[j]);
@@ -168,11 +717,12 @@
 
           scene.appendChild(trunk);
         }
-         //-------光のホワホワ-----------------------
+         //光粒子
           const PARTICLE_COUNT = 40;
 
           for (let i = 0; i < PARTICLE_COUNT; i++) {
             let x, z;
+            //内部は除外
             do {
               x = (Math.random() - 0.5) * 80;
               z = (Math.random() - 0.5) * 80;
