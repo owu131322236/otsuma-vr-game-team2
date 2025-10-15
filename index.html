@@ -640,12 +640,14 @@
         light="type: ambient; intensity: 0.55; color: #ffffff"
       ></a-entity>
       <!-- カメラなど -->
-      <a-entity id="cameraRig" position="0 1.6 30">
+      <a-entity
+        id="cameraRig"
+        position="0 1.6 30"
+        movement-controls="fly: false; speed: 0.2; constrainToNavMesh: false"
+      >
         <a-entity
           camera
-          move-controls="fly: false; speed: 0.5"
-          look-controls
-          wasd-controls
+          look-controls="pointerLockEnabled: true; reverseMouseDrag: true"
         >
           <a-image
             id="explainHud"
@@ -661,15 +663,13 @@
         laser-controls="hand: right"
         raycaster="objects: .clickable"
         line="opacity: 0.9"
-      >
-      </a-entity>
+      ></a-entity>
       <a-entity
         id="leftHand"
         laser-controls="hand: left"
         raycaster="objects: .clickable"
         line="opacity: 0.9"
-      >
-      </a-entity>
+      ></a-entity>
     </a-scene>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
