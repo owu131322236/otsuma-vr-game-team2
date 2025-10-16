@@ -8,18 +8,21 @@
 </head>
 <body>
 
-  <a-scene physics="driver: ammo ; gravity: -2" >
+  <a-scene physics="driver: ammo ; gravity: -0.6" >
 
     <a-sky color="#ABE1FA"></a-sky>
     
     
-    <a-entity id="rig" position="0 1.6 4">
+    <a-entity id="rig">
       <a-camera></a-camera>
     </a-entity>
 
     
-    <a-entity laser-controls="hand: right" cursor="fuse: false" raycaster="objects: .clickable-ball, .clickable; lineColor: red; lineOpacity: 0.8;"></a-entity>
-
+    <a-entity laser-controls="hand: right"
+    		  cursor="fuse: false"
+    		  raycaster="objects: .clickable-ball, .clickable; lineColor: red; linewidth: 3; lineOpacity: 0.8;">
+    </a-entity>
+    
     <a-cylinder
       id="trampoline"
       position="0 0 -5"
@@ -99,6 +102,34 @@
 	    <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
 	</a-entity>
 
+	<a-entity position="19 -8 -18" scale="1.8 1.8 1.8">
+	    <a-sphere radius="1.2" position="0 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="-1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="-0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.0" position="0 0.6 -0.6" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="1.5 0.4 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="-1.5 0.3 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="-0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
+	</a-entity>
+	
+	<a-entity position="-19 13 -18" scale="1.8 1.8 1.8">
+	    <a-sphere radius="1.2" position="0 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.2" position="-1.2 0 0" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.1" position="-0.8 0.5 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="1.0" position="0 0.6 -0.6" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="1.5 0.4 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.6" position="-1.5 0.3 0.2" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="-0.5 0.8 -0.5" color="#ffffff"></a-sphere>
+	    <a-sphere radius="0.5" position="0 0.9 -0.4" color="#ffffff"></a-sphere>
+	</a-entity>
+
 	    <a-text id="final-score" value="" position="0 2 -3" align="center" color="#ff69b4" visible="false" width="6"></a-text>
 	    <a-text id="score" value="Score: 0" position="-2 2 -3" color="black"></a-text>
 	    <a-text id="timer" value="Time: 30" position="1.2 2 -3" color="black"></a-text>
@@ -119,7 +150,7 @@
     <!-- ボタン上の文字 -->
     <a-text 
         id="end-text"
-        value="Home" 
+        value="Lobby" 
         position="0 1.2 -1.6" 
         align="center" 
         color="#555" 
@@ -251,6 +282,9 @@
 
 	      //this.el.setAttribute("color", "#FF69B4"); 
 	      this.el.setAttribute("color", "#00bfff"); 
+	      
+	      
+		      
 	      
 	      
 	      if (clickedBalls === totalBalls && droppedBalls === totalBalls) {
