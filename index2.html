@@ -1,4 +1,3 @@
-
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -6,10 +5,9 @@
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
-    <!-- <link rel="stylesheet" href="stylesheet.css"> -->
     
     <style>
-        /* HTMLのメッセージボックスのスタイル */
+        /* HTMLのメッセージボックスのスタイル (VR外の環境でも表示できるように残しています) */
         .message-box {
             position: absolute;
             top: 50%;
@@ -23,24 +21,31 @@
             text-align: center;
             font-size: 1.5em;
         }
-        #timer-display {
-            position: absolute; 
-            top: 10px; 
-            right: 10px; 
-            color: white; 
-            background: rgba(0, 0, 0, 0.7); 
-            padding: 5px; 
-            border-radius: 5px; 
-            z-index: 100;
-            font-family: sans-serif;
-        }
     </style>
 </head>
 <body>
     <a-scene background="color: #e0ffff">
-        <a-entity camera position="0 2 0" look-controls wasd-controls>
-        <a-entity cursor="fuse: true; rayOrigin: mouse" raycaster="objects: .window; far: 50; interval: 1000; lineColor: red; lineOpacity: 0.8;"></a-entity>
-        </a-entity>
+        <a-entity camera position="0 2 0" look-controls wasd-controls>
+            <a-text id="vr-timer-display" 
+                    value="Remaining Time: 60s" 
+                    position="0 0.5 -1.5" 
+                    width="2" 
+                    align="center" 
+                    color="#FFC107" 
+                    visible="false">
+            </a-text>
+
+            <a-text id="vr-game-message" 
+                    value="" 
+                    position="0 0 -3" 
+                    width="4" 
+                    align="center" 
+                    color="#FF0000" 
+                    visible="false">
+            </a-text>
+
+            <a-entity cursor="fuse: true; rayOrigin: mouse" raycaster="objects: .window; far: 50; interval: 1000; lineColor: red; lineOpacity: 0.8;"></a-entity>
+        </a-entity>
 
         <a-entity laser-controls="hand: right" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
         <a-entity laser-controls="hand: left" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
@@ -84,7 +89,7 @@
         <a-box id="rooftop-structure" position="0 3.75 -15" scale="2 1.5 1.5" color="#C0C0C0"></a-box>
         <a-torus id="clock-face" position="0 3.75 -14.2" radius="0.5" radius-tubular="0.05" color="#B22222" rotation="0 0 0"></a-torus>
         <a-plane position="0 0 -15" rotation="-90 0 0" width="30" height="30" color="#808000"></a-plane>
-    </a-scene>
+    </a-scene>
     
     <div class="message-box" id="clear-message-box" style="display: none;">
         <p>Congratulations!</p>
@@ -94,10 +99,7 @@
         <p>Game Over…</p>
     </div>
 
-    <a-text id="timer-display" position = "1 2.8 -3" width = "4" style="display: none;">Remaining Time: <span id="time-left"></span>s</a-text>
-
     <script>
-        // グローバルスコープでアクセスできるように変数と関数を定義
         let gameStarted = false;
         let timeLeft = 0;
         let timerInterval;
@@ -105,27 +107,27 @@
         const INITIAL_TIME = 60;
         const totalTargets = 5;
 
-        // start-game-on-click コンポーネントは不要になったため削除
+        // A-Frameエンティティのキャッシュ
+        const $vrTimerDisplay = $('#vr-timer-display');
+        const $vrGameMessage = $('#vr-game-message');
 
         $(function() {
             const windows = $('.window');
-            // startSphereGroup の取得は不要になったため削除
 
             // 初期状態の設定
             $('#clear-message-box').hide();
             $('#game-over-message-box').hide();
-            $('#timer-display').hide();
-            // スタート用立体の表示/非表示制御は不要
+            $vrTimerDisplay.attr('visible', false);
+            $vrGameMessage.attr('visible', false);
 
             // ゲーム開始処理
             function startGame() {
                 window.gameStarted = true;
                 $('#game-over-message-box').hide();
                 $('#clear-message-box').hide();
-                $('#timer-display').show();
+                $vrGameMessage.attr('visible', false);
+                $vrTimerDisplay.attr('visible', true); // VRタイマーを表示
                 
-                // スタート用立体の非表示処理は不要
-
                 // すべての窓を元の色にリセット
                 windows.attr('color', '#4169E1');
                 windows.removeClass('target-window'); 
@@ -146,11 +148,14 @@
 
                 // タイマーをセット
                 timeLeft = INITIAL_TIME;
-                $('#time-left').text(timeLeft);
+                // VRタイマーを更新
+                $vrTimerDisplay.attr('value', `Remaining Time: ${timeLeft}s`); 
                 clearInterval(timerInterval); 
                 timerInterval = setInterval(function() {
                     timeLeft--;
-                    $('#time-left').text(timeLeft);
+                    // VRタイマーを更新
+                    $vrTimerDisplay.attr('value', `Remaining Time: ${timeLeft}s`);
+                    
                     if (timeLeft <= 0) {
                         clearInterval(timerInterval);
                         endGame(false); // ゲームオーバー
@@ -187,46 +192,46 @@
             }
 
             // ゲーム終了処理 (クリア or ゲームオーバー)
-        function endGame(isCleared) {
-            window.gameStarted = false;
-            $('#timer-display').hide(); 
+            function endGame(isCleared) {
+                window.gameStarted = false;
+                $vrTimerDisplay.attr('visible', false); // VRタイマーを非表示に
 
-    // フェードアウトの完了後に実行する処理
-        const redirectToIndex = function() {
-        // 現在のページを index.html にリダイレクトする
-            window.location.href = 'index.html';
-        };
+                const message = isCleared ? "Congratulations!" : "Game Over...";
+                const color = isCleared ? "#00FF00" : "#FF0000";
 
-        if (isCleared) {
-            $('#clear-message-box').show();
-            setTimeout(function() {
-            // ① フェードアウト完了後、redirectToIndexを実行するように変更
-                $('#clear-message-box').fadeOut(400, redirectToIndex);
-            }, 3000); 
-        } else {
-            $('#game-over-message-box').show(); 
-            setTimeout(function() {
-            // ② フェードアウト完了後、redirectToIndexを実行するように変更
-            $('#game-over-message-box').fadeOut(400, redirectToIndex);
-        }, 3000); 
-    }
-}
+                // VR空間内のメッセージを表示
+                $vrGameMessage.attr('value', message);
+                $vrGameMessage.attr('color', color);
+                $vrGameMessage.attr('visible', true);
 
+                // HTMLメッセージボックスを表示 (VR環境でない場合などに備えて)
+                const $htmlMessageBox = isCleared ? $('#clear-message-box') : $('#game-over-message-box');
+                $htmlMessageBox.show(); 
+
+                // index.html にリダイレクトする関数
+                const redirectToIndex = function() {
+                    window.location.href = 'index.html';
+                };
+
+                // 3秒後にフェードアウトを開始し、**完了後**にリダイレクトを実行
+                setTimeout(function() {
+                    // フェードアウト完了後にredirectToIndexを実行
+                    $htmlMessageBox.fadeOut(400, redirectToIndex);
+                    
+                    // VRメッセージも非表示にする（アニメーションは複雑になるため、ここでは単純に非表示）
+                    $vrGameMessage.attr('visible', false); 
+
+                }, 3000); 
+            }
+
+            // A-Frameのシーンロード完了後にゲームを開始
             $('a-scene').on('loaded', function() {
                 startGame();
             });
 
-            // 念のため jQuery の DOM Ready でも実行しておく（保険として）
-            // startGame();
-            
-            // 関数をグローバルスコープに設定（今回は外部からのアクセスは不要になりましたが、以前の慣習として残すこともできます）
             window.startGame = startGame;
             window.endGame = endGame;
         });
     </script>
 </body>
 </html>
-
-
-
-
