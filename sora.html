@@ -12,7 +12,6 @@
 
     <a-sky color="#ABE1FA"></a-sky>
     
-    
     <a-entity id="rig">
       <a-camera></a-camera>
     </a-entity>
@@ -20,7 +19,7 @@
     
     <a-entity laser-controls="hand: right"
     		  cursor="fuse: false"
-    		  raycaster="objects: .clickable-ball, .clickable; lineColor: red; linewidth: 3; lineOpacity: 0.8;">
+    		  raycaster="objects: .clickable-ball, .clickable; far: 5; near: 0.05; lineColor: red; linewidth: 3; lineOpacity: 0.8;">
     </a-entity>
     
     <a-cylinder
@@ -270,7 +269,7 @@
 	      if (this.el.getAttribute("data-scored")) return;
 
 	      if (this.el.getAttribute("data-special") === "gold") {
-        score += 5; 
+        score += 5;
       } else {
         score++;
       }
