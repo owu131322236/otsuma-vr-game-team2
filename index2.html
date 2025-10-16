@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
     
     <style>
-        /* HTMLのメッセージボックスのスタイル (VR外の環境でも表示できるように残しています) */
+        /* HTMLのメッセージボックスのスタイル (VR外の環境向け。今回はボタンを使うため、主にVR要素を使用) */
         .message-box {
             position: absolute;
             top: 50%;
@@ -44,12 +44,26 @@
                     visible="false">
             </a-text>
 
-            <a-entity cursor="fuse: true; rayOrigin: mouse" raycaster="objects: .window; far: 50; interval: 1000; lineColor: red; lineOpacity: 0.8;"></a-entity>
+            <a-entity cursor="fuse: true; rayOrigin: mouse" raycaster="objects: .window, #lobby-plane; far: 50; interval: 1000; lineColor: red; lineOpacity: 0.8;"></a-entity>
         </a-entity>
 
-        <a-entity laser-controls="hand: right" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
-        <a-entity laser-controls="hand: left" raycaster="objects: .window; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
+        <a-entity laser-controls="hand: right" raycaster="objects: .window, #lobby-plane; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
+        <a-entity laser-controls="hand: left" raycaster="objects: .window, #lobby-plane; far: 50; lineColor: red; lineOpacity: 0.8;"></a-entity>
         
+        <a-plane id="lobby-plane"
+            position="0 0.9 -3"
+            width="1.8" height="0.5"
+            color="#4CAF50"
+            visible="false">
+        </a-plane>
+        <a-text id="lobby-text" value="Return to Lobby"
+            position="0 0.9 -2.9"
+            align="center"
+            color="#fff"
+            width="5"
+            visible="false">
+        </a-text>
+
         <a-box id="right-building" position="7 2.25 -15" scale="3 4.5 2" color="#C0C0C0"></a-box>
         <a-box class="window" position="6 3 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
         <a-box class="window" position="7 3 -13.9" scale="0.6 0.8 0.1" color="#4169E1"></a-box>
@@ -94,7 +108,6 @@
     <div class="message-box" id="clear-message-box" style="display: none;">
         <p>Congratulations!</p>
     </div>
-
     <div class="message-box" id="game-over-message-box" style="display: none;">
         <p>Game Over…</p>
     </div>
@@ -110,29 +123,41 @@
         // A-Frameエンティティのキャッシュ
         const $vrTimerDisplay = $('#vr-timer-display');
         const $vrGameMessage = $('#vr-game-message');
+        const $lobbyPlane = document.getElementById("lobby-plane");
+        const $lobbyText = document.getElementById("lobby-text");
 
         $(function() {
             const windows = $('.window');
 
-            // 初期状態の設定
+            // 1. 初期状態の設定
             $('#clear-message-box').hide();
             $('#game-over-message-box').hide();
             $vrTimerDisplay.attr('visible', false);
             $vrGameMessage.attr('visible', false);
+            $lobbyPlane.setAttribute("visible", "false");
+            $lobbyText.setAttribute("visible", "false");
 
-            // ゲーム開始処理
+            // 2. ロビーボタンのイベントリスナー設定
+            // イベントリスナーはDOM Ready時に一度だけ設定します
+            if ($lobbyPlane) {
+                $lobbyPlane.addEventListener('click', () => {
+                    window.location.href = "index.html"; // index.htmlへ遷移
+                });
+            }
+
+            // 3. ゲーム開始処理
             function startGame() {
                 window.gameStarted = true;
-                $('#game-over-message-box').hide();
-                $('#clear-message-box').hide();
+                // 初期化/リセット
                 $vrGameMessage.attr('visible', false);
-                $vrTimerDisplay.attr('visible', true); // VRタイマーを表示
+                $vrTimerDisplay.attr('visible', true); 
+                $lobbyPlane.setAttribute("visible", "false");
+                $lobbyText.setAttribute("visible", "false");
                 
-                // すべての窓を元の色にリセット
+                // 窓のリセットとターゲット設定
                 windows.attr('color', '#4169E1');
                 windows.removeClass('target-window'); 
 
-                // ランダムに5つの窓を選ぶ
                 let targetIndices = [];
                 while (targetIndices.length < totalTargets) {
                     const randIndex = Math.floor(Math.random() * windows.length);
@@ -141,19 +166,16 @@
                     }
                 }
 
-                // 選ばれた窓に特別なクラスを追加
                 targetIndices.forEach(i => {
                     windows.eq(i).addClass('target-window');
                 });
 
                 // タイマーをセット
                 timeLeft = INITIAL_TIME;
-                // VRタイマーを更新
                 $vrTimerDisplay.attr('value', `Remaining Time: ${timeLeft}s`); 
                 clearInterval(timerInterval); 
                 timerInterval = setInterval(function() {
                     timeLeft--;
-                    // VRタイマーを更新
                     $vrTimerDisplay.attr('value', `Remaining Time: ${timeLeft}s`);
                     
                     if (timeLeft <= 0) {
@@ -163,7 +185,7 @@
                 }, 1000);
             }
 
-            // 窓をクリックしたときのイベント
+            // 4. 窓のクリックイベント
             $('.window').on('click', function(e) {
                 if (!window.gameStarted) { 
                     return;
@@ -173,17 +195,17 @@
                 const currentColor = $this.attr('color');
 
                 if ($this.hasClass('target-window')) {
-                    $this.attr('color', '#FF4500'); // 窓を赤色にする
+                    $this.attr('color', '#FF4500'); 
                     $this.removeClass('target-window'); 
-                    checkAllWindowsClicked(); // クリックするたびにチェック
+                    checkAllWindowsClicked(); 
                 } else if (currentColor === '#FF4500' || currentColor === '#FFD700') { 
-                    $this.attr('color', '#4169E1'); // 窓を元の青色に戻す
+                    $this.attr('color', '#4169E1'); 
                 } else {
-                    $this.attr('color', '#FFD700'); // 窓を金色にする
+                    $this.attr('color', '#FFD700'); 
                 }
             });
 
-            // すべてのtarget-windowがクリックされたかどうかをチェックする関数
+            // 5. ゲームクリア判定
             function checkAllWindowsClicked() {
                 if ($('.target-window').length === 0) {
                     clearInterval(timerInterval); 
@@ -191,7 +213,7 @@
                 }
             }
 
-            // ゲーム終了処理 (クリア or ゲームオーバー)
+            // 6. ゲーム終了処理 (クリア or ゲームオーバー)
             function endGame(isCleared) {
                 window.gameStarted = false;
                 $vrTimerDisplay.attr('visible', false); // VRタイマーを非表示に
@@ -204,23 +226,17 @@
                 $vrGameMessage.attr('color', color);
                 $vrGameMessage.attr('visible', true);
 
-                // HTMLメッセージボックスを表示 (VR環境でない場合などに備えて)
-                const $htmlMessageBox = isCleared ? $('#clear-message-box') : $('#game-over-message-box');
-                $htmlMessageBox.show(); 
+                // HTMLメッセージボックスは非表示 (今回はVRボタンがメインのため)
+                $('#clear-message-box').hide(); 
+                $('#game-over-message-box').hide(); 
 
-                // index.html にリダイレクトする関数
-                const redirectToIndex = function() {
-                    window.location.href = 'index.html';
-                };
-
-                // 3秒後にフェードアウトを開始し、**完了後**にリダイレクトを実行
-                setTimeout(function() {
-                    // フェードアウト完了後にredirectToIndexを実行
-                    $htmlMessageBox.fadeOut(400, redirectToIndex);
-                    
-                    // VRメッセージも非表示にする（アニメーションは複雑になるため、ここでは単純に非表示）
-                    $vrGameMessage.attr('visible', false); 
-
+                // ロビーボタンとテキストを表示
+                $lobbyPlane.setAttribute("visible", "true");
+                $lobbyText.setAttribute("visible", "true");
+                
+                // VRメッセージは3秒後に非表示にする（ボタンと共存させるため）
+                setTimeout(() => {
+                    $vrGameMessage.setAttribute('visible', false);
                 }, 3000); 
             }
 
