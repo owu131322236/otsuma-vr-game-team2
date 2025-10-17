@@ -35,7 +35,7 @@
   <body>
     <a-scene background="color: #020617">
       <a-entity
-        cursor="rayOrigin: mousse
+        cursor="rayOrigin: mouse
         raycaster="objects: .clickable"
       ></a-entity>
       <a-sound
@@ -665,13 +665,15 @@
           id="leftHand"
           laser-controls="hand: left"
           raycaster="objects: .clickable"
-          line="color: red; opacity: 0.9"
+          lineColor: red;
+          lineOpacity: 0.9"
         ></a-entity>
         <a-entity
           id="rightHand"
           laser-controls="hand: right"
           raycaster="objects: .clickable"
-          line="color: red; opacity: 0.9"
+          lineColor: red;
+          lineOpacity: 0.9"
         ></a-entity>
       </a-entity>
     </a-scene>
