@@ -5,6 +5,17 @@
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
     <link rel="stylesheet" href="stylesheet.css" />
     <script>
+      AFRAME.registerComponent('custom-laser-color', {
+        schema: { color: { default: '#ff0000' } },
+        init: function () {
+          this.el.addEventListener('loaded', () => {
+          const line = this.el.getObject3D('line');
+          if (line && line.material) {
+            line.material.color.set(this.data.color);
+          }
+          });
+        }
+      });
       AFRAME.registerComponent("hover-link", {
         schema: {
           url: { type: "string" },
