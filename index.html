@@ -48,6 +48,7 @@
       <a-entity
         cursor="rayOrigin: mouse
         raycaster="objects: .clickable"
+        custom-laser-color="color: red"
       ></a-entity>
       <a-sound
         src="url(sounds-3D/lobby-music.mp3)"
@@ -468,7 +469,13 @@
           height="1.9"
           position="0 3.2 -7.15"
         ></a-plane>
-
+        <a-text
+        value="2"
+        position="0 4.6 -7.15"
+        color="#000"
+        align="center"
+        width="20"
+        ></a-text>
         <a-box
           color="#e6d2a4"
           depth="0.1"
@@ -484,7 +491,13 @@
           position="-4.9 4 -6"
           rotation="0 10 0"
         ></a-plane>
-
+        <a-text
+        value="1"
+        position="-4.9 5.6 -6"
+        color="#000"
+        align="center"
+        width="20"
+        ></a-text>
         <a-box
           color="#e6d2a4"
           depth="0.1"
@@ -500,6 +513,13 @@
           position="6.1 4.5 -6.55"
           rotation="0 -10 0"
         ></a-plane>
+        <a-text
+        value="3"
+        position="6.1 5.8 -6.55"
+        color="#000"
+        align="center"
+        width="20"
+        ></a-text>
       </a-entity>
       <!-- 説明文 -->
       <a-plane
